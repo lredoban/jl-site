@@ -13,7 +13,7 @@ require('./models/Guests');
 require('./models/Users');
 require('./config/passport');
 
-mongoose.connect(MONGOLAB_URI);
+mongoose.connect('mongodb://heroku_gxmm7933:g3t067lui413uoa1cgfgv6bajs@ds043190.mongolab.com:43190/heroku_gxmm7933');
 //END Lovadd
 
 var routes = require('./routes/index');
