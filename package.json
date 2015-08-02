@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "./bin/www"
+    "start": "node ./bin/www"
   },
   "dependencies": {
     "body-parser": "~1.12.4",
@@ -19,10 +19,7 @@
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.2.1"
   },
-  "scripts":{
-    "start": "node app.js"
-  },
   "engines": {
-    "node": "0.10.33"
+    "node": "0.10.332"
   }
 }
