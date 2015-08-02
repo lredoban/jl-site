@@ -1,0 +1,90 @@
+<div class="col-md-6 col-md-offset-3">
+  <header>
+  	<h1 class="text-center">{{test}}</h1>
+  </header>
+  <section>
+  <div class="row text-center charts">
+    <div style="width:25%; height:25%; display:inline-block">
+      <pie-chart data="pieChart" options="pieOptions"></pie-chart>
+    </div>
+     <div style="width:25%; height:25%;display:inline-block">
+      <pie-chart data="pieChart2" options="pieOptions2"></pie-chart>
+    </div>
+     <div style="width:25%; height:25%;display:inline-block">
+      <pie-chart data="pieChart3" options="pieOptions3"></pie-chart>
+    </div>
+  </div>
+  <div class="row text-center charts">
+    <div style="width:25%; height:25%; display:inline-block">
+      <pie-chart data="mairieChart" options="mairieOptions"></pie-chart>
+    </div>
+     <div style="width:25%; height:25%;display:inline-block">
+      <pie-chart data="soireeChart" options="soireeOptions"></pie-chart>
+    </div>
+     <div style="width:25%; height:25%;display:inline-block">
+      <pie-chart data="brunchChart" options="brunchOptions"></pie-chart>
+    </div>
+  </div>
+  <div class="col-xs-12 search">
+    <label style="margin-bottom: 20px;"><i class="fa fa-search"></i> <input type="text" ng-model="famSearch" ng-change="loadChart(ffDeMars)"></label>
+    <span class="text-right">Il y a {{ffDeMars.length}} familles</span>
+    <span class="myBlue">, {{present}} inscrites, {{invites}} invités</span>
+  </div>
+  <div class="col-xs-12" ng-repeat="family in ffDeMars = (families | filter:famSearch | orderBy:['-presence', '-recu' ,'-guests.length'])" >
+  	<div class="panel panel-default"  ng-class="{'panel-success': family.presence, 'panel-danger': !family.recu}">
+  	  <div class="panel-heading">
+        <div style="float:right;">
+            reçu: <a href='#' ng-click='switchRecu(family)'><i class="fa fa-check-square-o" ng-show="family.recu"></i><i class="fa fa-square-o" ng-hide="family.recu"></i></a>
+        </div>
+        <h2 class="panel-title">
+                  <a href="#" ng-click='testSMS(family)'>TEST SMS</a> 
+
+          <a href="#/families/{{family._id}}">{{family.login}}</a> 
+          <span class="tab" ng-show="family.presence">{{family.guests.length}} invité(s)</span>
+        </h2>
+      </div>
+  	  <div class="panel-body">
+        <ul class="list-inline" style="float:right;" ng-show="family.presence">
+          <li ng-repeat="(fete, val) in family.fetes">
+            {{fete}}: <i class="fa fa-check-square-o" ng-show="val"></i><i class="fa fa-square-o" ng-hide="val"></i>
+          </li>
+        </ul>
+        <address>
+            {{family.address}}<br>
+            {{family.city}}<br>
+            {{family.zipCode}}<br>
+          <div class="contact" ng-show="family.presence">
+            <i class="fa fa-envelope-o"></i> : <a href="mailto:{{family.email}}">{{family.email}}</a> <br>
+            <i class="fa fa-mobile"></i> : {{family.tel}}
+          </div>
+        </address>
+  	  </div>
+  	</div>
+</div>
+</section>
+  <div ng-hide="isLoggedIn()">
+  	<h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a Family.</h3>
+  </div>
+  <div ng-show="error" class="alert alert-danger row">
+        <span>{{ error.message }}</span>
+  </div>
+  <form  class="loginForm" ng-submit="addFamily()" ng-show="isLoggedIn()" style="margin-top:30px;">
+        <h3>Ajouter une nouvelle Famille</h3>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="login" ng-model="login"></input>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="password" ng-model="password"></input>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="address" ng-model="address"></input>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="city" ng-model="city"></input>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="zipCode" ng-model="zipCode"></input>
+        </div>      			        
+        <button type="submit" class="btn btn-primary">Ajouter la famille <strong>{{login}}</strong></button>
+  </form>
+</div>

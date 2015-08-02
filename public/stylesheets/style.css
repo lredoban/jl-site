@@ -1,0 +1,286 @@
+@font-face { font-family: Code; src: url('/fonts/CODE Bold.otf'); } 
+
+body, html {
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  font-family: Code, 'Montserrat', Arial, sans-serif;
+}
+
+body{
+	padding-bottom: 40px;
+	font-size: 18px;
+}
+
+input{
+	font-family: arial;
+}
+
+.myBlue{
+	color: #0e3a5d;
+}
+
+.myGreen{
+	color:#005f2f;
+}
+
+.myRed{
+	color:#8c0000;
+}
+
+nav a,.navbar-default .navbar-nav>li>a{
+	color: white;
+}
+
+.myBlueBack{
+	background-color: #0e3a5d;
+	color: white;
+}
+
+#login{
+	background-color: #0e3a5d;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#logologin>img{
+	width:150px;
+	margin-top: 10%;
+}
+
+#formlogin input{
+	display: block;
+	margin: 30px 0;
+	width: 100%;
+}
+
+#logo{
+	margin:20px 0;
+}
+
+#hodor{
+	font-size:127;
+	color:#978a79;
+	margin-left: 30px;
+}
+
+.triangle-down-right {
+    width: 15%;
+    height: 0;
+    padding-top: 15%;
+    overflow: hidden;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+}
+.triangle-down-right:after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-top:-500px;
+    
+    border-top: 500px solid transparent;
+    border-right: 500px solid #0e3a5d;
+}
+
+.input-lg, .btn-lg{
+	border-radius:0px;
+}
+
+.tlogin{
+	width:30%;
+    padding-top: 30%;
+    z-index: 6;
+}
+
+.tlogin:after{
+	width:30%;
+    border-right: 500px solid #978a79;
+}
+
+.next{
+	margin:20px;
+	float:left;
+}
+
+.family .row{
+	margin:10px 0px;
+}
+
+.family input{
+	color: white;
+	background-color: #d2c9bc;
+	border:1px solid #B2B2B2;
+	padding-left: 5px;
+}
+
+.form-control, .btn{
+	border-radius: 0px;
+}
+
+.lineBefore::before{
+	content: "";
+	height:1px;
+	width:70%;
+	border-top:1px solid #BBBBBB;
+	margin-bottom: 20px;
+	margin-left: 15%;
+	padding-top: -10px;
+}
+
+.tab{
+	margin-left: 30px;
+}
+
+li{
+	list-style: none;
+}
+
+.myNavbar{
+	position:fixed;
+	right:0;
+	top:0;
+	height: 100%;
+	width:20%;
+	-webkit-transition:transform .5s;
+	transition:transform .5s;
+	transform-origin: 0% 100%;
+	-webkit-transform: rotate(45deg);
+	transform: rotate(45deg) ;
+	z-index: 4;
+	padding: 50px 10px;
+}
+
+.myNavbar:hover{
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg) ;
+}
+.myNavbar:hover .footer{
+	-webkit-transform: rotate(0deg);
+	transform: rotate(0deg);
+	padding-left: 10px;
+}
+.footer{
+	transform-origin: 0% 100%;
+	-webkit-transition:all .5s;
+	transition:all .5s;
+	-webkit-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+	position: absolute;
+	bottom: 0px;
+	right: 0px;
+	width: 100%;
+	color: white;
+	padding: 5px;
+	padding-left: 27%;
+}
+
+.footer p{
+	font-size: 75%;
+	font-weight: bold;
+	margin: 0 0;
+}
+/*   Transitions angularjs*/
+
+.anim1.ng-hide-add-active{
+	-webkit-animation: fadeOutUp 0.5s;
+	animation: fadeOutUp 0.5s;
+	position: absolute;
+}
+
+.anim1.ng-hide-remove-active{
+	-webkit-animation: fadeInDown 0.5s;
+	animation: fadeInDown 0.5s;
+	position: absolute;
+}
+
+.anim2.ng-hide-add-active{
+	-webkit-animation: fadeOutDown 0.5s;
+	animation: fadeOutDown 0.5s;
+	position: absolute;
+}
+
+.anim2.ng-hide-remove-active{
+	-webkit-animation: fadeInUp 0.5s;
+	animation: fadeInUp 0.5s;
+	position: absolute;
+}
+
+.anim3.ng-hide-add-active{
+	-webkit-animation: flipOutX 0.5s;
+	animation: flipOutX 0.5s;
+	position: absolute;
+}
+
+.anim3.ng-hide-remove-active{
+	-webkit-animation: flipInX 0.5s;
+	animation: flipInX 0.5s;
+	position: absolute;
+}
+
+
+/* PULSE from http://l-lin.github.io/font-awesome-animation/ */
+
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  50% {
+    -webkit-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+
+  100% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+}
+
+
+@keyframes pulse {
+  0% {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+
+  50% {
+    -webkit-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+
+  100% {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+}
+
+.faa-pulse.animated,
+.faa-pulse.animated-hover:hover,
+.faa-parent.animated-hover:hover > .faa-pulse {
+  -webkit-animation: pulse 2s linear infinite;
+  animation: pulse 2s linear infinite;
+}
+
+.faa-pulse.animated.faa-fast,
+.faa-pulse.animated-hover.faa-fast:hover,
+.faa-parent.animated-hover:hover > .faa-pulse.faa-fast {
+  -webkit-animation: pulse 1s linear infinite;
+  animation: pulse 1s linear infinite;
+}
+
+.faa-pulse.animated.faa-slow,
+.faa-pulse.animated-hover.faa-slow:hover,
+.faa-parent.animated-hover:hover > .faa-pulse.faa-slow {
+  -webkit-animation: pulse 3s linear infinite;
+  animation: pulse 3s linear infinite;
+}
+
+.iti-flag {background-image: url("/bower_components/intl-tel-input/build/img/flags.png");}
