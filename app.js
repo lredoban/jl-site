@@ -13,7 +13,9 @@ require('./models/Guests');
 require('./models/Users');
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/mariage');
+var db_url = process.env.MONGOLAB_URI || 'mongodb://localhost/mariage';
+
+mongoose.connect(db_url);
 //END Lovadd
 
 var routes = require('./routes/index');
