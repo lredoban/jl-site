@@ -13,7 +13,7 @@ require('./models/Guests');
 require('./models/Users');
 require('./config/passport');
 
-mongoose.connect('mongodb://localhost/mariage');
+mongoose.connect(MONGOLAB_URI);
 //END Lovadd
 
 var routes = require('./routes/index');
