@@ -33,6 +33,33 @@ strong{
     height: auto;
 }
 
+#participationsInfos div{
+    margin-top: 1em;
+}
+
+.delete, .add{
+    cursor: pointer;
+}
+
+a.delete:hover, a.add:hover{
+    text-decoration: none;
+}
+a.add:hover{
+    color: #62905F;
+}
+.delete::after{
+    content:" SUPPRIMER";
+    color: #8F494D;
+}
+.add::after{
+    content:" AJOUTER";
+    color: #62905F;
+}
+
+.pure-form-aligned.pure-form input{
+    display: inline-block;
+}
+
 /*
  * -- Colors --
  * 
@@ -353,9 +380,12 @@ footer {
  * -- ANIMATIONS, UX MOFO--
  *
  */
-
-*:hover{
-        -webkit-transition:all 0.5s;
+.pure-button,.pure-button, a, a{
+    -webkit-transition:all 0.5s;
+    transition:all 0.5s;
+}
+.pure-button:hover,.pure-button:focus, a:hover, a:focus{
+    -webkit-transition:all 0.5s;
     transition:all 0.5s;
 }
 
@@ -480,7 +510,18 @@ footer {
     .l-box-lrg {
         border: none;
     }
-
+    a.delete:hover, a.add:hover{
+        text-decoration: none;
+    }
+    a.add:hover{
+        color: #8F494D;
+    }
+    .delete:hover::after{
+        content:" SUPPRIMER";
+    }
+    .add:hover::after{
+        content:" AJOUTER";
+    }
 }
 
 /*

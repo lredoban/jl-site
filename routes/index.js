@@ -156,6 +156,19 @@ router.put('/Families/dodo', auth, function(req, res, next) {
   });
 });
 
+router.put('/Families/participation', auth, function(req, res, next) {
+  var fam = req.body;
+  Family.findById(fam._id,function(err, f){
+    if(err || !f){ return next(err); }
+    f.participation = fam.participation;
+    f.modified = new Date();
+    f.save(function(err){
+      if(err){ return next(err); }
+        res.json(f);
+    });
+  });
+});
+
 router.put('/Families/covoiturage', auth, function(req, res, next) {
   var fam = req.body;
   Family.findById(fam._id,function(err, f){

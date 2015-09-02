@@ -249,6 +249,12 @@ angular.module('JL', ['ui.router', 'ngAnimate', 'ngNotify', 'ngSanitize', 'n3-pi
  		});
 	};
 
+	o.participation = function (family){
+		return $http.put('/Families/participation', family, {
+ 			headers: {Authorization: 'Bearer '+auth.getToken()}
+ 		});
+	};
+
 	return o;
 }])
 
@@ -305,6 +311,25 @@ function($scope, auth){
 	'$anchorScroll',
 	function($scope, families, family, auth, ngNotify, $location, $anchorScroll){
 		$scope.family = family;
+		$scope.participation = family.participation;
+
+		console.log(family.participation);
+
+		$scope.liste = [
+			{categorie:"cook", name:"Sablés au parmesan"},
+			{categorie:"cook", name:"Verrines saumon fumé et mascarpone citronné"},
+			{categorie:"cook", name:"Verrines de melon, mozzarella, jambon cru"},
+			{categorie:"cook", name:"Gâteaux, cakes"},
+			{categorie:"cook", name:"J'ai une recette perso qui va épater tout le monde"},
+			{categorie:"drink", name:"Mojito - L'incontournable"},
+			{categorie:"drink", name:"Sangria blanche - L'exquise"},
+			{categorie:"drink", name:"Sangria rouge - La chaleureuse"},
+			{categorie:"drink", name:"Spritz - Le cocktail le plus coté du Canal Saint Martin"},
+			{categorie:"drink", name:"Autre cocktail (ex: punch à Jaquet) ou softs"},
+			{categorie:"bring", name:"Légumes, Fruits"},
+			{categorie:"bring", name:"Oléagineux (Amandes, noisettes,noix) "},
+			{categorie:"bring", name:"Chips à l'ancienne, cacahuètes"},
+		];
 
 		if (!family.hasOwnProperty('covoit')){
 			family.covoit = true;
@@ -344,6 +369,46 @@ function($scope, auth){
     					html: true
 					});
 			});
+		}
+
+		$scope.validParticipation = function(family){
+			if (family.participation.length <= 0){
+				ngNotify.set('Sélectionnez une participation <i class="fa fa-cart-plus green"></i> avant de valider', {
+						position:'top',
+						type: 'error',
+						duration: 1400,
+    					theme: 'pitchy',
+    					html: true
+					});
+				return;
+			}
+			families.participation($scope.family).success(function(data, status){
+				ngNotify.set('Vos changements ont bien été pris en compte ' + data.login,
+						 {position:'top',type: 'success',theme: 'pitchy', sticky: false, duration: 1400});
+			}).error(function(err){
+				ngNotify.set('Il y a eu un problème: ' + err, {
+						position:'top',
+						type: 'error',
+						sticky:true,
+    					theme: 'pitchy',
+    					html: true
+					});
+			});
+		}
+		$scope.addPart = function(item){
+			item = angular.copy(item)
+			console.log(item);
+			for (var i = $scope.family.participation.length - 1; i >= 0; i--) {
+				if ($scope.family.participation[i].name == item.name)
+					return;
+			};
+			$scope.family.participation.push(item);
+			console.log($scope.family.participation);
+		}
+
+		$scope.removePart = function(index){
+			$scope.family.participation.splice(index,1);
+			console.log($scope.family.participation);
 		}
 	}])
 

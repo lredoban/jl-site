@@ -17,7 +17,7 @@ var FamilySchema = new mongoose.Schema({
   guests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Guest' }],
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   oldmdp:{type: Number, default: 0},
-  participation:{cook: {type: String, quantity: Number}, drink: {type: String, quantity: Number}, bring: {type: String, quantity: Number}}
+  participation:[{categorie:String,name: String}]
 });
 
 FamilySchema.methods.delGuest = function(idGuest){
