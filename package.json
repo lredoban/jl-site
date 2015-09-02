@@ -17,7 +17,8 @@
     "morgan": "~1.5.3",
     "passport": "^0.2.2",
     "passport-local": "^1.0.0",
-    "serve-favicon": "~2.2.1"
+    "serve-favicon": "~2.2.1",
+    "request": "2.61.0"
   },
   "engines": {
     "node": "0.10.33"
