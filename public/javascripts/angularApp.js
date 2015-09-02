@@ -457,6 +457,21 @@ function($scope, auth){
 				});
 		};
 
+		$scope.confirm = function(family){
+			families.confirmation(family).success(function(data, status){
+				ngNotify.set('Changements effectué: ' + data, {position:'top',type: 'success',theme: 'pitchy'});
+			}).error(function(err){
+				ngNotify.set(err, {
+					position:'top',
+					type: 'error',
+					sticky:true,
+    				theme: 'pitchy',
+    				html: true
+				});
+			});
+
+		};
+
 		$scope.sendSms = function(family, message){
 			pushbullet.sendSms(family.tel, message).success(function(data, status){
 				ngNotify.set('Sms envoyé: ' + data, {position:'top',type: 'success',theme: 'pitchy'});
