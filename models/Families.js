@@ -22,8 +22,8 @@ var FamilySchema = new mongoose.Schema({
 
 FamilySchema.methods.delGuest = function(idGuest){
 	for (var i = 0, len = this.guests.length; i < len; i++) {
-  		console.log("i:" + i + " idGuest:" + idGuest + "this.guest i:" + this.guests[i] );
-  		if(idGuest === this.guests[i])
+  		console.log("i:" + i + " idGuest:" + idGuest + " this.guest i:" + this.guests[i] );
+  		if(idGuest == this.guests[i])
   		{
   			this.guests.splice(i, 1);
   			return this.guests;

@@ -221,6 +221,7 @@ router.delete('/Guests/:guest/:family', auth, function(req, res, next){
   var guest = req.params.guest;
   var f = req.family;
   
+  console.log(f.delGuest(guest));
   f.save(function(err){
     if(err){ return next(err); }
     Guest.remove({_id:req.params.guest}, function(err){
