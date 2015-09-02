@@ -1,0 +1,131 @@
+<div class="family col-xs-12">
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+    <h2 class="greetings">Salut <span ng-repeat="guest in family.guests">{{guest.firstName}}{{$last ? ' ' : ( $index  == family.guests.length - 2) ? ' & ' : ', '}}</span>!
+    </h2>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+    Aurons nous la chance de {{(family.guests.length == 1) ? 'te' : 'vous'}} voir le 12 septembre 2015?
+  </div>
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+    <div class="radio radio-success tab">
+        <input type="radio" ng-model="family.presence" id="radio1" ng-value=true>
+        <label for="radio1">
+            Oui
+        </label>
+    </div>    
+    <div class="radio radio-danger tab">
+        <input type="radio" ng-model="family.presence" id="radio2" ng-value=false>
+        <label for="radio2">
+            Non
+        </label>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 anim1" ng-show="family.presence == true">
+      <div class="row lineBefore">
+      En voilà une bonne nouvelle! nous sommes ravis! <br>
+      avant de continuer, merci de nous indiquer une adresse mail ainsi qu'un n° de portable sur lequel nous pourrons {{(family.guests.length == 1) ? 'te' : 'vous'}} tenir informé(s) de la suite des evenements <br>
+      cette étape est indispensable.
+        <form name="myForm">
+          <div class="form-group" style="margin-top:10px; width:234px; " ng-class="{'has-error':myForm.mail.$dirty && myForm.mail.$invalid, 'has-success': myForm.mail.$dirty && myForm.mail.$valid}">
+            <input type="email" class="form-control" name="mail" placeholder="adresse mail" ng-model="family.email" required>
+          </div>
+          <div class="form-group" ng-class="{'has-success': (family.tel != undefined)}">
+            <input type="text" international-phone-number only-countries="fr, de" default-country="fr" 
+            national-mode="true" ng-model="family.tel">
+          </div>
+        </form>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 anim2" ng-show="family.presence == false">
+    <br>Quel Dommage! vous allez le regretter! <br><br>
+    a bientot! <br><br>
+    julie & lova
+    <div style="margin-top:30px;">
+      <form ng-submit="confirm()">
+        <button class="btn myBlueBack" type="submit">Confirmer</button>
+      </form>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 anim3" ng-show="myForm.mail !== '' && myForm.mail.$valid && myForm.tel !== '' && family.tel != undefined && family.presence == true">
+    <div class="row lineBefore">
+      combien serez vous? <br>
+      <ul>
+        <li ng-repeat="guest in family.guests">
+            {{guest.firstName}} {{guest.lastName}}  <a href="" ng-click="removeGuest(guest, $index)"><i class="fa fa-user-times myRed"></i></a>
+        </li>
+        <li ng-if="family.guests.length <= 1 ||  isAdmin()">
+          <a href="" data-toggle="modal" data-target="#newGuest"><i class="fa fa-user-plus"></i></a>
+        </li>
+      </ul>
+      
+      <div class="modal fade" id="newGuest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span> </button>
+                  <h4 class="modal-title" id="myModalLabel">Ajouter un invité</h4>
+                </div>
+                <div class="modal-body">
+              <form ng-submit="addGuest()" ng-show="family.guests.length <= 1 ||  isAdmin()" style="margin-top:30px;">          
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Prénom" ng-model="firstName"></input>
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="Nom" ng-model="lastName"></input>
+                </div>
+                <button type="submit" class="btn btn-primary" id="addGuest" >Ajouter</button>
+              </form>
+                </div>
+            </div>
+          </div>
+      </div>
+  
+      venez vous? <br>
+  
+      <div class="tab">
+        <div class="checkbox checkbox-success">
+          <input type="checkbox" id="mairie" ng-model="family.fetes.mairie">
+          <label for="mairie">
+              a la mairie
+          </label>
+        </div>
+      </div>
+      <div class="tab">
+        <div class="checkbox checkbox-success">
+          <input type="checkbox" id="soiree" ng-model="family.fetes.soiree">
+          <label for="soiree">
+              a la soiree
+          </label>
+        </div>
+      </div>
+      <div class="tab">
+        <div class="checkbox checkbox-success">
+          <input type="checkbox" id="brunch" ng-model="family.fetes.brunch">
+          <label for="brunch">
+              au brunch
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 anim3" ng-show="myForm.mail !== '' && myForm.mail.$valid && myForm.tel !== '' && family.tel != undefined && family.presence == true">
+    <div class="row lineBefore">
+      <strong>C'est un mariage participatif!</strong> <br> <br>
+      Comme nous adorons tout faire nous même, <br>
+      Vous allez vous aussi mettre la main à la pate ! <br> <br>
+      Ne préparez rien !  <br> 
+      Gardez votre mal en patience !  <br> <br>
+      Les informations vous seront données au compte goutte  <br>
+      à partir du <strong>19 juin 2015</strong>. <br> <br>
+      Nous revenons très vite vers vous !  <br> <br>
+      Julie & Lova
+    </div>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-sm-offset-2 anim3" ng-show="myForm.mail !== '' && myForm.mail.$valid && myForm.tel !== '' && family.tel != undefined && family.presence == true">
+    <div class="row lineBefore">
+      <form ng-submit="confirm()">
+        <button class="btn myBlueBack" type="submit">Confirmer</button>
+      </form>
+    </div>
+  </div>
+</div>

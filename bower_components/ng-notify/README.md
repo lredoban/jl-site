@@ -1,9 +1,9 @@
-ng-notify ([live demo](http://matowens.github.io/ng-notify/#demo)) [![Build Status](https://travis-ci.org/matowens/ng-notify.svg?branch=master)](https://travis-ci.org/matowens/ng-notify)
+ng-notify ([live demo](http://matowens.github.io/ng-notify/#demo)) [![Build Status](https://travis-ci.org/matowens/ng-notify.svg?branch=master)](https://travis-ci.org/matowens/ng-notify) [![Code Climate](https://codeclimate.com/github/matowens/ng-notify/badges/gpa.svg)](https://codeclimate.com/github/matowens/ng-notify)
 =========
 
 A simple, lightweight module for displaying notifications in your AngularJS app.
 
-Both JS and CSS files combine for ~4.6 kBs.
+Both JS and CSS files combine for ~4.4 kBs.
 
 IE9+ (AngularJS v1.3.x no longer supports IE8) and the latest versions of Chrome, FireFox and Safari have been tested and are supported.  If you do run across any issues, please submit a [new issue](https://github.com/matowens/ng-notify/issues) and I'll take a look - or better yet - submit a PR with the bug fix and I'll merge it in.
 
@@ -24,7 +24,17 @@ You can install ng-notify with Bower.
 
     bower install ng-notify --save
 
-You can also download source files straight from this repo, they're located in the `dist` dir.  Just include the minified version of both js and css files.
+As of v0.6.0, ng-notify is now available via the jsDelivr CDN if you'd prefer to go down that route.
+
+    //cdn.jsdelivr.net/angular.ng-notify/{version.number.here}/ng-notify.min.js
+    //cdn.jsdelivr.net/angular.ng-notify/{version.number.here}/ng-notify.min.css
+
+For example:
+
+    //cdn.jsdelivr.net/angular.ng-notify/0.6.0/ng-notify.min.js
+    //cdn.jsdelivr.net/angular.ng-notify/0.6.0/ng-notify.min.css
+
+And as always, you can download the source files straight from this repo - they're located in the `dist` dir.  Be sure to include the minified version of both js and css files.
 
 ###Usage
 
@@ -59,9 +69,12 @@ ngNotify.config({
     position: 'bottom',
     duration: 3000,
     type: 'info',
-    sticky: false
+    sticky: false,
+    html: false
 });
 ```
+
+Default configuration options can be set during the `run()` block.  If your app utilizes a global controller, the config options could be set there just as well.  For a discussion and working example on this topic, checkout [this comment](https://github.com/matowens/ng-notify/issues/16#issuecomment-104492193).
 
 ###Individual Configurations
 
@@ -80,8 +93,9 @@ ngNotify.set('Your second message.', {
 
 ngNotify.set('Your third message.', 'error'); // Original use case still works, too.
 
-ngNotify.set('Your fourth message.', {
-    theme: 'pitchy'
+ngNotify.set('Your <i>fourth</i> message.', {
+    theme: 'pitchy',
+    html: true
 });
 ```
 
@@ -279,22 +293,24 @@ You can fire off a `grunt` or `grunt build` command manually at any time to lint
 grunt (or grunt build)
 ```
 
-Also, you can run `grunt dev` to lint, minify, and prep your demo for testing.  Once the build is complete, it'll also fire off a `watch` so that any changes you make to the the sass, js, and demo files will automatically trigger the build script to update your project.
+Also, you can run `grunt dev` to lint, minify, and prep your demo for testing.  Once the build is complete, it'll also fire off a `watch` so that any changes that are made to the the sass, js, and demo files will automatically trigger the build script to update your project.
 
 ```console
 grunt dev
 ```
 
-To run through the configured unit tests, we'll be utilizing `grunt test`.  This is sort of a placeholder at the moment until I can get to it.  Until then, this test will pass as long as the scripts pass the lint task.  Our Travis CI setup will use this to run through and validate that our project is in tip top shape.
+To run through the configured unit tests, you can run `grunt test`.  This will fire off a series of tests that check that all default options are set correctly, all configurable options are able to be set correctly, and that all methods carry out the functionality that they're supposed to.  These tests should let you know if any of the updates that you've made have negatively effected any preexisting functionality.  Also, when the tests complete, there will be a test coverage report generated and stored in the `coverage` directory.
 
 ```console
 grunt test
 ```
 
-Next, you'll want to do all of your development within two files.  If you add changes anywhere else, they're likely to be overwritten during the build process.  These two files are:
+Next, you'll want to do all of your development within three locations.  If you add changes anywhere else, they're likely to be overwritten during the build process.  These locations are:
 
 `src/scripts/ng-notify.js` - for any script modifications.
 
 `src/styles/ng-notify.sass` - for any style modifications.
 
-Lastly, once you've made your changes and run through the appropriate grunt tasks, your changes should now be ready for you to use in the `dist` directory - as minified js and css files.
+`demo/*` - for any modifications to the demo.
+
+Lastly, once you've made your changes and run through the appropriate grunt tasks, your changes should be baked and ready for you to consume - located in the `dist` directory as minified js and css files.

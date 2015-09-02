@@ -1,135 +1,90 @@
-<html>
-	<head>
-		<title>_J&L_</title>
-		<link href='https://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="/stylesheets/style.css">		
-		<link rel="stylesheet" href="/stylesheets/awesome-bootstrap-checkbox.css">
-		<link rel="stylesheet" href="/stylesheets/animate.css">
-		<link rel="stylesheet" href="/stylesheets/ng-notify.min.css">
-		<link rel="stylesheet" href="/bower_components/intl-tel-input/build/css/intlTelInput.css">
-		<link rel="icon" type="image/png" href="/images/favicon.png" />
-   		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-		<script src="bower_components/intl-tel-input/build/js/intlTelInput.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
-   		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular-animate.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-sanitize.js"></script>
-   		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-   		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
-		<script src="javascripts/angularApp.js"></script>
-		<script src="javascripts/ng-notify.min.js"></script>
-		<script src="javascripts/pie-chart.min.js"></script>
-		<script src="bower_components/international-phone-number/releases/international-phone-number.js"></script>
-	</head>
-	<body ng-app="JL">
-		<nav class="navbar navbar-default navbar-fixed-top myBlueBack hidden-md hidden-lg">
-		  <div class="container-fluid">
-		    <!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-      			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-    			  <span class="sr-only">Toggle navigation</span>
-    			  <span class="icon-bar"></span>
-    			  <span class="icon-bar"></span>
-    			  <span class="icon-bar"></span>
-    			</button>
-      			<a class="navbar-brand" href="/#/home">
-       			 <img style="margin-top:-12px;" alt="J&L" src="/images/logoBlancSmall.png">
-      			</a>
-			</div>
-		    <!-- Collect the nav links, forms, and other content for toggling -->
-		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		      <ul class="nav navbar-nav text-right">
-		  	  	<li ><a href="/#/welcome">Welcome</a></li>
-		  	  	<li ><a href="/#/family">Inscription</a></li>
-		  	  	<li ng-show="isAdmin()"><a href="/#/home">Home</a></li>
-		  	  	<li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-		  	  	<li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-		  	  	<li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
-		      </ul>
-		    </div><!-- /.navbar-collapse -->
-		  </div><!-- /.container-fluid -->
-		</nav>
-		<header class="row hidden-xs hidden-sm">
-			<div id="logo" class="text-center"><a href="/#/home"><img src="/images/logoNoirMedium.png" alt=""></a></div>
-		</header>
-		<div class="row">
-			<ui-view></ui-view>
-		</div>
-		<nav class="myNavbar myBlueBack hidden-xs hidden-sm" ng-controller="NavCtrl">
-			<h3>Menu de {{ currentUser() }}</h3>
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Julie and Lovasoa are getting Married!!! \o/">
+    
+        <title>_J&L_ | True Love</title>
+        
+        <link rel="icon" type="image/png" href="/images/favicon.png" />
+    
+        <link rel="stylesheet" href="stylesheets/bootstrap-panel.css">
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <!--[if lte IE 8]>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-old-ie-min.css">
+    <![endif]-->
+    <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
+    <!--<![endif]-->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/stylesheets/animate.css">
+        <link rel="stylesheet" href="/stylesheets/ng-notify.min.css">
+        <link rel="stylesheet" href="/bower_components/intl-tel-input/build/css/intlTelInput.css">
+        <link rel="stylesheet" href="stylesheets/purelayout.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script src="bower_components/intl-tel-input/build/js/intlTelInput.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.10/angular-animate.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-sanitize.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+        <script src="javascripts/angularApp.js"></script>
+        <script src="javascripts/ng-notify.min.js"></script>
+        <script src="javascripts/pie-chart.min.js"></script>
+        <script src="bower_components/international-phone-number/releases/international-phone-number.js"></script>
+    </head>
+    <body ng-app="JL">
+        <header>
+            <div class="home-menu pure-menu pure-menu-horizontal pure-menu-fixed">
+                <a class="logo" href="#/home"><img alt="J&L" src="/images/logoJ&LWhite.svg"></a>
+                    <ul class="pure-menu-list" ng-controller="NavCtrl">
+                        <li class="pure-menu-item"><a href="#/home" class="pure-menu-link">Accueil</a></li>
+                        <li class="pure-menu-item"><a href="#/video" class="pure-menu-link">Vidéo</a></li>
+                        <li ng-show="isAdmin()" class="pure-menu-item"><a href="/#/family" class="pure-menu-link">Mes infos</a></li>
+                        <li ng-show="isAdmin()" class="pure-menu-item"><a href="/#/families" class="pure-menu-link">Les familles</a></li>
+                        <li ng-show="isLoggedIn()" class="pure-menu-item"><a href="/#/login" ng-click="logOut()" class="pure-menu-link">Log Out</a></li>
+                        <li ng-hide="isLoggedIn()" class="pure-menu-item"><a href="/#/login" class="pure-menu-link">Log In</a></li>
+                    </ul>
+            </div>
+        </header>
+        <div class="splash-container">
+            <div id="sheldon"><img src="http://sheldon-cooper.de/wp-content/themes/twentyten/images/sheldon-cooper.png" alt="Sheldon Cooper"></div>
+            <div class="splash">
+                <div id="clockdiv">
+                  <div>
+                    <span class="days"></span>
+                    <div class="smalltext">Jours</div>
+                  </div>
+                  <div>
+                    <span class="hours"></span>
+                    <div class="smalltext">Heures</div>
+                  </div>
+                  <div>
+                    <span class="minutes"></span>
+                    <div class="smalltext">Minutes</div>
+                  </div>
+                  <div>
+                    <span class="seconds"></span>
+                    <div class="smalltext">Secondes</div>
+                  </div>
+                </div>
+                <p>
+                    <a href="https://youtu.be/9jK-NcRmVcw?t=1m56s" target="_blank" class="pure-button pure-button-primary">Préparez-vous!</a>
+                </p>
+            </div>
+        </div>
 
-		  	<ul class="Log">
-		  	  <li ><a href="/#/welcome">Welcome</a></li>
-		  	  <li ><a href="/#/family">Inscription</a></li>
-		  	  <li ng-show="isAdmin()"><a href="/#/home">Home</a></li>
-		  	  <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
-		  	  <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
-		  	  <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
-		  	</ul>
-		  	<footer class="footer text-center">
-				<p>POUR NOUS CONTACTER:</p>
-				<p>JULIE: 06.49.88.01.82. LOVASOA: 06.28.40.26.90</p>
-		  	</footer>
-		</nav>
-		<script type="text/ng-template" id="/register.html">
-		  <div class="page-header">
-		    <h1>JL</h1>
-		  </div>
-		
-		  <div ng-show="error" class="alert alert-danger row">
-		    <span>{{ error.message }}</span>
-		  </div>
-		
-		  <form ng-submit="register()"
-		    style="margin-top:30px;">
-		    <h3>Register</h3>
-		
-		    <div class="form-group">
-		      <input type="text"
-		      class="form-control"
-		      placeholder="Username"
-		      ng-model="user.username"></input>
-		    </div>
-		    <div class="form-group">
-		      <input type="password"
-		      class="form-control"
-		      placeholder="Password"
-		      ng-model="user.password"></input>
-		    </div>
-		    <button type="submit" class="btn btn-primary">Register</button>
-		  </form>
-		</script>
-		<script type="text/ng-template" id="/family.html">
-		  	<div class="panel panel-default">
-			  <div class="panel-heading">
-			    <h2 class="panel-title">{{family.login}}</h2>
-			  </div>
-			  <div class="panel-body">
-			    {{family.address}}<br>{{family.city}}<br>{{family.zipCode}}
-			  </div>
-			</div>	
+        <div class="content-wrapper">
+    
+            <ui-view></ui-view>
 
-		  <div ng-repeat="guest in family.guests">
-		    {{guest.firstName}} - {{guest.lastName}}
-		  </div>
-		<div ng-hide="isLoggedIn()">
-		  <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a Guest.</h3>
-		</div>
-			<div ng-show="error" class="alert alert-danger row">
-		   		<span>{{ error.message }}</span>
-		  	</div>
-		  <form ng-submit="addGuest()" ng-show="isLoggedIn()" style="margin-top:30px;">
-			  <h3>Ajouter un nouvel invité</h3>					  
-			  <div class="form-group">
-			    <input type="text" class="form-control" placeholder="Prénom" ng-model="firstName"></input>
-			  </div>
-			  <div class="form-group">
-			    <input type="text" class="form-control" placeholder="Nom" ng-model="lastName"></input>
-			  </div>
-			  <button type="submit" class="btn btn-primary">On envoie</button>
-			</form>
-		</script>
-	</body>
+            <footer class=" l-box is-center">
+                POUR NOUS CONTACTER: JULIE [06.49.88.01.82] LOVASOA [06.28.40.26.90]
+            </footer>
+
+        </div>
+        <script src="javascripts/countdown.js"></script>
+    </body>
 </html>

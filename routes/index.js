@@ -82,7 +82,7 @@ router.get('/Families', auth, function(req, res, next) {
 });
 
 router.get('/Families/:family', auth, function(req, res, next) {
-	req.family.populate('guests', function(err, family){
+	req.family.populate('guests covoitInfo.driver', function(err, family){
 		if (err){return next(err);}
   		res.json(family);		
 	});
@@ -112,12 +112,15 @@ router.put('/Families/confirm', auth, function(req, res, next) {
   Family.findById(fam._id,function(err, f){
     if(err || !f){ return next(err); }
     f.presence = fam.presence;
-    if (f.presence){
-      f.email = fam.email;
-      f.tel = fam.tel;
-      f.fetes = fam.fetes;
-      f.recu = true;
-    }
+    f.email = fam.email;
+    f.tel = fam.tel;
+    f.fetes = fam.fetes;
+    f.recu = true;
+    f.login = fam.login;
+    f.address = fam.address;
+    f.zipCode = fam.zipCode;
+    f.city = fam.city;
+    f.oldmdp = fam.oldmdp;
     f.modified = new Date();
     f.save(function(err){
       if(err){ return next(err); }
@@ -132,6 +135,51 @@ router.put('/Families/recu', auth, function(req, res, next) {
     if(err || !f){ return next(err); }
     f.recu = !f.recu;
     f.modified = new Date();
+    f.save(function(err){
+      if(err){ return next(err); }
+        res.json(f);
+    });
+  });
+});
+
+router.put('/Families/dodo', auth, function(req, res, next) {
+  var fam = req.body;
+  Family.findById(fam._id,function(err, f){
+    if(err || !f){ return next(err); }
+    f.dodo = !f.dodo;
+    f.modified = new Date();
+    f.save(function(err){
+      if(err){ return next(err); }
+        res.json(f);
+    });
+  });
+});
+
+router.put('/Families/covoiturage', auth, function(req, res, next) {
+  var fam = req.body;
+  Family.findById(fam._id,function(err, f){
+    if(err || !f){ return next(err); }
+    f.modified = new Date();
+    f.covoit = fam.covoit;
+    if (f.covoit){
+      f.covoitInfo.rider = fam.covoitInfo.rider;
+      if (f.covoitInfo.rider){
+        f.covoitInfo.seats = fam.covoitInfo.seats;
+        Guest.findById(fam.covoitInfo.driver._id, function(err,g){
+            if(err || !f){ return next(err);}
+            f.covoitInfo.driver = g;
+            f.save(function(err){if(err){ return next(err); }});
+          });
+      }
+      else
+        f.covoitInfo.seats = 0;
+        f.covoitInfo.driver = null;
+    }
+    else{
+      f.covoitInfo.rider = false;
+      f.covoitInfo.driver = null;
+      f.covoitInfo.seats = 0;
+    }
     f.save(function(err){
       if(err){ return next(err); }
         res.json(f);
@@ -158,7 +206,6 @@ router.delete('/Guests/:guest/:family', auth, function(req, res, next){
   var guest = req.params.guest;
   var f = req.family;
   
-  console.log(f.delGuest(guest));
   f.save(function(err){
     if(err){ return next(err); }
     Guest.remove({_id:req.params.guest}, function(err){

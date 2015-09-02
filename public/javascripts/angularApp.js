@@ -8,35 +8,29 @@ angular.module('JL', ['ui.router', 'ngAnimate', 'ngNotify', 'ngSanitize', 'n3-pi
 			.state('home',{
 				url: '/home',
 				templateUrl: '/home.html',
-				controller: 'MainCtrl',
+				controller: 'HomeCtrl',
 				onEnter: ['$state', 'auth', function($state, auth){
-			    	if(!auth.isAdmin()){
-			     		$state.go('welcome');
-			    	}
 			  	}],
-				resolve: {
-					famPromise : ['families', function(families){
-						return families.getAll();
-					}]
-				}
+			  	resolve: {
+			  		family: ['families', 'auth', function(families, auth){
+			  			return families.get(auth.currentFamily());
+			  	}]
+			  }
 			})
 			.state('login', {
 			  url: '/login',
 			  templateUrl: '/login.html',
 			  controller: 'AuthCtrl',
 			  onEnter: ['$state', 'auth', function($state, auth){
-			    if(auth.isAdmin()){
-			      $state.go('home');
-			    }
 			    if(auth.isLoggedIn()){
-			      $state.go('welcome');
+			      $state.go('home');
 			    }
 			  }]
 			})
-			.state('welcome', {
-			  url: '/welcome',
-			  templateUrl: '/welcome.html',
-			  controller: 'WelcomeCtrl',
+			.state('video', {
+			  url: '/video',
+			  templateUrl: '/video.html',
+			  controller: 'VideoCtrl',
 			  onEnter: ['$state', 'auth', function($state, auth){
 			    if(!auth.isLoggedIn()){
 			      $state.go('login');
@@ -49,17 +43,46 @@ angular.module('JL', ['ui.router', 'ngAnimate', 'ngNotify', 'ngSanitize', 'n3-pi
 			  controller: 'AuthCtrl',
 			  onEnter: ['$state', 'auth', function($state, auth){
 			    if(auth.isLoggedIn()){
-			      $state.go('welcome');
+			      $state.go('video');
 			    }
 			  }]
 			})
 			.state('family', {
 			  url: '/family',
-			  templateUrl: '/families.html',
-			  controller: 'FamiliesCtrl',
+			  templateUrl: '/family.html',
+			  controller: 'FamilyCtrl',
+			  onEnter: ['$state', 'auth', function($state, auth){
+			  }],
 			  resolve: {
 			  	family: ['families', 'auth', function(families, auth){
 			  		return families.get(auth.currentFamily());
+			  	}]
+			  }
+			})		
+			.state('familyId', {
+			  url: '/family/{id}',
+			  templateUrl: '/family.html',
+			  controller: 'FamilyCtrl',
+			  onEnter: ['$state', 'auth', function($state, auth){
+			  }],
+			  resolve: {
+			  	family: ['$stateParams', 'families', function($stateParams, families){
+			  		return families.get($stateParams.id);
+			  	}]
+			  }
+			})		
+			.state('families', {
+			  url: '/families',
+			  templateUrl: '/families.html',
+			  controller: 'FamiliesCtrl',
+			  onEnter: ['$state', 'auth', function($state, auth){
+				if(!auth.isAdmin()){
+			      $state.go('home');
+			    }
+			  }],
+			  resolve: {
+			  	famPromise : ['families', function(families){
+			  		return families.getAll();
 			  	}]
 			  }
 			})
@@ -70,16 +93,6 @@ angular.module('JL', ['ui.router', 'ngAnimate', 'ngNotify', 'ngSanitize', 'n3-pi
 			  resolve: {
 			  	family: ['families', 'auth', function(families, auth){
 			  		return families.get(auth.currentFamily());
-			  	}]
-			  }
-			})		
-			.state('families', {
-			  url: '/families/{id}',
-			  templateUrl: '/families.html',
-			  controller: 'FamiliesCtrl',
-			  resolve: {
-			  	family: ['$stateParams', 'families', function($stateParams, families){
-			  		return families.get($stateParams.id);
 			  	}]
 			  }
 			});
@@ -154,6 +167,23 @@ angular.module('JL', ['ui.router', 'ngAnimate', 'ngNotify', 'ngSanitize', 'n3-pi
  	return auth;
 }])
 
+.factory("pushbullet", ['$http', 'auth', function($http, auth){
+	var p = {};
+
+	p.sendSms = function (tel, message){
+
+		var body = {
+			'tel': tel,
+			'message': message
+		};
+		return $http.post('/PushBullet/sms', body,{
+  			headers: {Authorization: 'Bearer '+auth.getToken()}
+  		});
+	};
+
+	return p;
+}])
+
 .factory("families", [ '$http', 'auth', function($http, auth){
 	var o = {
 	  families: []
@@ -205,28 +235,19 @@ angular.module('JL', ['ui.router', 'ngAnimate', 'ngNotify', 'ngSanitize', 'n3-pi
 		return $http.put('/Families/recu', family,{			
  			headers: {Authorization: 'Bearer '+auth.getToken()}
 		});
-	};
+	};	
 
-
-	o.sms = function (family){
-		return $http.post('https://api.pushbullet.com/v2/ephemerals', 
-		{
-			"type": "push",
-    		"push": {
-    		    "type": "messaging_extension_reply",
-    		    "package_name": "com.pushbullet.android",
-    		    "source_user_iden": "ujBfybHhLno",
-    		    "target_device_iden": "ujBfybHhLnosjAuXDo0g56",
-    		    "conversation_iden": family.tel,
-    			"message": "[J&L] Hello " + family.login + "!"
-    		}
-		},
-		{			
- 			headers: {Authorization: 'Bearer '+ 'Nt1zYidSE3egNH9jVK6M2CP6U6cm63MW'},
-
+	o.switchDodo = function (family){
+		return $http.put('/Families/dodo', family,{			
+ 			headers: {Authorization: 'Bearer '+auth.getToken()}
 		});
 	};
 
+	o.covoiturage = function (family){
+		return $http.put('/Families/covoiturage', family, {
+ 			headers: {Authorization: 'Bearer '+auth.getToken()}
+ 		});
+	};
 
 	return o;
 }])
@@ -243,7 +264,7 @@ function($scope, $state, auth, ngNotify){
     auth.register($scope.user).error(function(error){
       	ngNotify.set(error.message, {position:'top',type: 'error',theme: 'pitchy'});
     }).then(function(){
-      $state.go('welcome');
+      $state.go('video');
     });
   };
 
@@ -252,10 +273,7 @@ function($scope, $state, auth, ngNotify){
     auth.logIn($scope.user).error(function(error){
       	ngNotify.set(error.message, {position:'top',type: 'error',theme: 'pitchy'});
     }).then(function(){
-		if(auth.isAdmin()){
-		  $state.go('home');
-		}
-      $state.go('welcome');
+      $state.go('home');
     });
   };
 }])
@@ -267,22 +285,77 @@ function($scope, auth){
   $scope.isLoggedIn = auth.isLoggedIn;
   $scope.currentUser = auth.currentUser;
   $scope.logOut = auth.logOut;
+  $scope.isAdmin = auth.isAdmin;
 }])
 
-.controller('WelcomeCtrl', [
+.controller('VideoCtrl', [
 '$scope',
 'auth',
 function($scope, auth){
   $scope.isLoggedIn = auth.isLoggedIn;
 }])
 
-.controller('MainCtrl', [
+.controller('HomeCtrl', [
 	'$scope',
 	'families',
+	'family',
+	'auth',
+	'ngNotify',
+	'$location',
+	'$anchorScroll',
+	function($scope, families, family, auth, ngNotify, $location, $anchorScroll){
+		$scope.family = family;
+
+		if (!family.hasOwnProperty('covoit')){
+			family.covoit = true;
+		}
+
+		$scope.scrollTo = function(id) {
+    		$location.hash(id);
+    		$anchorScroll();
+		}
+
+		$scope.switchDodo = function(family){
+			families.switchDodo({_id:family._id}).success(function(data, status){
+					family.dodo = data.dodo;
+					ngNotify.set('Vos changements ont bien été pris en compte',
+						 {position:'top',type: 'success',theme: 'pitchy', sticky: false, duration: 1400});
+				}).error(function(err){
+					ngNotify.set(err, {
+						position:'top',
+						type: 'error',
+						sticky:true,
+    					theme: 'pitchy',
+    					html: true
+					});
+				});
+		}
+
+		$scope.covoiturage = function(family){
+			families.covoiturage($scope.family).success(function(data, status){
+				ngNotify.set('Vos changements ont bien été pris en compte ' + data.login,
+						 {position:'top',type: 'success',theme: 'pitchy', sticky: false, duration: 1400});
+			}).error(function(err){
+				ngNotify.set('Il y a eu un problème: ' + err, {
+						position:'top',
+						type: 'error',
+						sticky:true,
+    					theme: 'pitchy',
+    					html: true
+					});
+			});
+		}
+	}])
+
+.controller('FamiliesCtrl', [
+	'$scope',
+	'families',
+	'pushbullet',
 	'auth',
 	'ngNotify',
 	'$timeout',
-	function($scope, families, auth, ngNotify, $timeout){
+	'$interpolate',
+	function($scope, families, pushbullet, auth, ngNotify, $timeout, $interpolate){
 		$scope.test = "We are getting Married!!! \\o/";
 		$scope.families = families.families;
 		$scope.isLoggedIn = auth.isLoggedIn;
@@ -382,22 +455,54 @@ function($scope, auth){
     					html: true
 					});
 				});
+		};
+
+		$scope.confirm = function(family){
+			families.confirmation(family).success(function(data, status){
+				ngNotify.set('Changements effectué: ' + data, {position:'top',type: 'success',theme: 'pitchy'});
+			}).error(function(err){
+				ngNotify.set(err, {
+					position:'top',
+					type: 'error',
+					sticky:true,
+    				theme: 'pitchy',
+    				html: true
+				});
+			});
+
+		};
+
+		$scope.sendSms = function(family, message){
+			pushbullet.sendSms(family.tel, message).success(function(data, status){
+				ngNotify.set('Sms envoyé: ' + data, {position:'top',type: 'success',theme: 'pitchy'});
+			}).error(function(err){
+				ngNotify.set(err, {
+					position:'top',
+					type: 'error',
+					sticky:true,
+    				theme: 'pitchy',
+    				html: true
+				});
+			});
 		}
 
-		$scope.testSMS = function(family){
-			families.sms(family).success(function(data, status){
-				console.log(data);
-				console.log(status);
-				ngNotify.set(data, {position:'top',type: 'success',theme: 'pitchy', sticky: true});
-			}).error(function(err){
-					ngNotify.set(err, {
-						position:'top',
-						type: 'error',
-						sticky:true,
-    					theme: 'pitchy',
-    					html: true
-					});
-			});
+		$scope.bulkSendSms = function(message, test){
+			var template = $interpolate(message);
+			var fams = $scope.ffDeMars;
+			if (test)
+				n = 1;
+			else
+				n = fams.length - 1;
+			for (var i = n; i >= 0; i--) {
+				if (typeof fams[i].tel != 'undefined' && fams[i].tel.length == 10 && (fams[i].tel.slice(0,2) == '17' || fams[i].tel.slice(0,2) == '07' || fams[i].tel.slice(0,2) == '06' )){
+					if (!test){
+						console.log(template({f:fams[i]}));
+						$scope.sendSms(fams[i],template({f:fams[i]}));
+					}
+					else
+						$scope.messageSmsLauncherTest = template({f:fams[i]});
+				}
+			};
 		}
 
 		$scope.addFamily = function(){
@@ -422,7 +527,7 @@ function($scope, auth){
 		};
 }])
 
-.controller('FamiliesCtrl',[
+.controller('FamilyCtrl',[
 	'$scope',
 	'families',
 	'family',
@@ -460,36 +565,6 @@ function($scope, auth){
 		 		$scope.firstName = '';
 		  		$scope.lastName = '';
 		  });
-		};
-		$scope.confirm = function(){
-			if($scope.family.presence !== true && $scope.family.presence !== false) { 
-				ngNotify.set("Ce cas ne devrait pas arriver. Contecter l'administrateur du site.", {position:'top', type: 'error', theme: 'pitchy'});
-				return; 
-			}
-			if($scope.family.presence === true && ($scope.family.email === "" || $scope.family.tel === "")) {
-				ngNotify.set("Nous avons besoin d'une adresse email et d'un numéro de téléphone.", {position:'top', type: 'error', theme: 'pitchy'});
-				return;
-			}
-			if($scope.family.presence === true 
-				&& $scope.family.fetes.mairie === false && $scope.family.fetes.soiree === false 
-					&& $scope.family.fetes.brunch === false ){
-				ngNotify.set("Venez vous: - A la maire? a la soiree? au brunch?", {position:'top', type: 'error', theme: 'pitchy'});
-				return;
-			}
-			if($scope.family.presence === true 
-				&& $scope.family.guests.length <= 0){
-				ngNotify.set("Veuillez ajouter un invité à 'combien serez vous?'", {position:'top', type: 'error', theme: 'pitchy'});
-				return;
-			}
-
-
-			families.confirmation($scope.family).success(function(data, status){
-				$location.path( "/confirmed" );
-			}).error(function(data, status){
-				console.log(status);
-				console.log(data);
-			});
-
 		};
 }])
 .controller('ConfirmedCtrl',[
