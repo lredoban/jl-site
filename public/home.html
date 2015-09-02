@@ -60,8 +60,8 @@
         <p class="text-right"> <i>Julie & Lovasoa</i></p>
     </div>
 </div>
-
-<div id="participation" class="content">
+<span class="anchor" id="participation"></span>
+<div class="content">
     <h2 class="content-head is-center">Participation</h2>
     <div class="pure-g">
         <div class="l-box-lrg pure-u-1 pure-u-md-1-3">
@@ -94,70 +94,60 @@
                         <input id="apero-one" type="radio" ng-model="cook" value="apero1">
                         Sablés au parmesan
                     </label>
-                    <p class="indic animate-show" ng-show="cook == 'apero1'">
-                        A la sortie du four, mettre un pincée de piment d'espelette sur chaque sablé
-                    </p>
-                
                     <label for="apero-two" class="pure-radio">
                         <input id="apero-two" type="radio" ng-model="cook" value="apero2">
                         Verrines saumon fumé et mascarpone citronnée
                     </label>
-                    <p class="indic animate-show" ng-show="cook == 'apero2'">
-                        Petit conseil: servir très frais donc prévoir une glacière pour le trajet ;)
-                    </p>
-                
                     <label for="apero-three" class="pure-radio">
                         <input id="apero-three" type="radio" ng-model="cook" value="apero3">
                         Verrines de melon, mozzarella, jambon cru
                     </label>
-                    <p class="indic animate-show" ng-show="cook == 'apero3'">
-                        Petit conseil: servir très frais donc prévoir une glacière pour le trajet ;)
-                    </p>
-
                     <label for="apero-four" class="pure-radio">
                         <input id="apero-four" type="radio" ng-model="cook" value="apero4">
                         gâteau, cake 
                     </label>
-                    <p class="indic animate-show" ng-show="cook == 'apero4'"></p>
-
                     <label for="apero-five" class="pure-radio">
                         <input id="apero-five" type="radio" ng-model="cook" value="apero5">
                         J'ai une recette perso qui va épater tous le monde.
                     </label>
-                    <p class="indic animate-show" ng-show="cook == 'apero5'">
-                    </p>
                 </form>
             </div>
             <div class="animate-show" ng-show="participation.type == 'drink'">
                 <p class="indic">Nous avons un peu de vin 2-3 bières, il manque quelques cocktails sympathiques pour agrémenter la soirée</p>
                 <form class="pure-form">
                     <label for="alcool-one" class="pure-radio">
-                        <input id="alcool-one" type="radio" ng-model="alcoolsRadios" value="alcool1">
+                        <input id="alcool-one" type="radio" ng-model="drink" value="alcool1">
                         Mojito - L'incontournable
                     </label>
                     <p class="indic" class="animate-show" ng-show=""></p>
                 
                     <label for="alcool-two" class="pure-radio">
-                        <input id="alcool-two" type="radio" ng-model="alcoolsRadios" value="alcool2">
+                        <input id="alcool-two" type="radio" ng-model="drink" value="alcool2">
                         Sangria blanche - L'exquise
                     </label>
                     <p class="indic" class="animate-show" ng-show=""></p>
                 
                     <label for="alcool-three" class="pure-radio">
-                        <input id="alcool-three" type="radio" ng-model="alcoolsRadios" value="alcool3">
-                        Spritz - Le cocktail le plus coté du Canal Saint Martin
+                        <input id="alcool-three" type="radio" ng-model="drink" value="alcool3">
+                        Sangria rouge - La chaleureuse
                     </label>
                     <p class="indic" class="animate-show" ng-show=""></p>
 
                     <label for="alcool-four" class="pure-radio">
-                        <input id="alcool-four" type="radio" ng-model="alcoolsRadios" value="alcool4">
+                        <input id="alcool-four" type="radio" ng-model="drink" value="alcool4">
+                        Spritz - Le cocktail le plus coté du Canal Saint Martin
+                    </label>
+                    <p class="indic" class="animate-show" ng-show=""></p>
+
+                    <label for="alcool-five" class="pure-radio">
+                        <input id="alcool-five" type="radio" ng-model="drink" value="alcool5">
                         Autre cocktail (ex: punch à Jaquet)
                     </label>
                     <p class="indic" class="animate-show" ng-show=""></p>
                 </form>
             </div>
             <div class="animate-show" ng-show="participation.type == 'bring'">
-                <p class="indic">Je ne sais pas quoi mettre</p>
+                <p class="indic"></p>
                 <form class="pure-form">
                     <label for="achat-one" class="pure-radio">
                         <input id="achat-one" type="radio" ng-model="achatsRadios" value="achat1">
@@ -186,14 +176,155 @@
             </div>
         </div>
         <div class="l-box-lrg pure-u-1 pure-u-md-1-3">
+            <h3>Recettes</h3>
+            <div class="animate-show" ng-show="cook == 'apero1' && participation.type == 'cook'">
+                <span class="green">Recette pour 10 personnes</span><br>
+                <ul>
+                    <li>350 gr farine</li>
+                    <li>350 gr parmesan</li>
+                    <li>350 gr beurre</li>
+                    <li>3 grosses pincées sel</li>
+                    <li>3 pincées piment d'espelette</li>
+                </ul>
+                <ol>
+                    <li>Mélanger dans un saladier: farine, parmesan, beurre et sel ; ajouter eau si nécessaire.</li>
+                    <li>Former des sablés assez petits mais épais et les mettre sur une plaque avec du papier sulfurisé.</li>
+                    <li>Mettre à four chaud (<span class="red">160°</span>) pendant 15mn et surveiller la couleur.</li>
+                    <li>
+                        <span class="green">A la sortie du four, mettre un pincée de piment d'espelette sur chaque sablé.</span>
+                    </li>
+                </ol>
+            </div>
+            <div class="animate-show" ng-show="cook == 'apero2' && participation.type == 'cook'">
+                <span class="green">Recette pour 10 personnes</span><br>
+                <ul>
+                    <li>2 pot de mascarpone</li>
+                    <li>2 citron</li>
+                    <li>8 tranches de saumon fumé</li>
+                    <li>sel</li>
+                    <li>poivre</li>
+                </ul>
+                <ol>
+                    <li>Dans un saladier y mettre un pot de mascarpone, le jus de citron , salez poivrez, mélangez le tout.</li>
+                    <li>Coupez les tranches de saumon en petits cubes.</li>
+                    <li>Prenez vos petites verrines mettre un peu de saumon dans le fond puis au dessus la crème mascarpone et ainsi de suite jusqu'en haut de la verrine.</li>
+                    <li>
+                        <span class="green">Petit conseil:</span> servir très <span class="blue">frais</span> donc prévoir une glacière pour le trajet ;)
+                    </li>
+                </ol>
+            </div>
+            <div class="animate-show" ng-show="cook == 'apero3' && participation.type == 'cook'">
+                <span class="green">Recette pour 10 personnes</span><br>
+                <ul>
+                    <li>2 melons</li>
+                    <li>8 tranches de jambon de Parme</li>
+                    <li>Basilic frais</li>
+                    <li>3 boules de mozzarella</li>
+                    <li>Sel, poivre</li>
+                    <li>Huile d'olive</li>
+                </ul>
+                <ol>
+                    <li>Coupez le melon, épluchez-le et détaillez-le en petits dés.</li>
+                    <li>Coupez les tranches de jambon en lanières de 0,5 mm environ.</li>
+                    <li>Coupez la mozzarella en petits dés.</li>
+                    <li>Dans un saladier, mettez tous les ingrédients et mélangez délicatement.</li> 
+                    <li>Ajoutez quelques feuilles de basilic hachées finement.</li>
+                    <li>Assaisonnez avec le poivre, le sel si nécessaire, et un filet d'olive.</li>
+                    <li>Répartissez dans les verrines en veillant à ce que tous les ingrédients soient bien répartis.</li>
+                    <li>
+                        <span class="green">Petit conseil:</span> servir très <span class="blue">frais</span> donc prévoir une glacière pour le trajet ;)
+                    </li>
+                </ol>
+            </div>
 
-            <p class="is-center"><button type="submit" class="pure-button pure-button-primary">Je valide</button></p>
+            <div class="animate-show" ng-show="drink == 'alcool1' && participation.type == 'drink'">
+                <span class="green">Recette pour 1L</span><br>
+                <ul>
+                    <li>50 cl de rhum cubain</li>
+                    <li>25 cl de jus de citrons verts</li>
+                    <li>une bonne botte de feuilles de menthe</li>
+                    <li>25 cl de sirop de sucre de canne</li>
+                    <li>Complétez avec de l'eau gazeuse (perrier, san pellegrino...)</li>
+                </ul>
+                <span class="green">Petit conseil:</span> ne pas mettre l'eau gazeuse dans votre preparation, nous le mettrons au <span class="blue">frais</span>, nous le servirons au bon moment.
+            </div>
+            <div class="animate-show" ng-show="drink == 'alcool2' && participation.type == 'drink'">
+                <span class="green">Recette pour 10 personnes</span><br>
+                <ul>
+                    <li>2,5 L litres de vin blanc sec</li>
+                    <li>300 de sucre en poudre - selon votre goût</li>
+                    <li>2 citrons</li>
+                    <li>2 oranges</li>
+                    <li>3 pêches</li>
+                    <li>2 bâtons de canelle</li>
+                    <li>2 clous de girofle</li>
+                    <li>5 cl de liqueur à l'orange type Grand-Marnier</li>
+                    <li>1/2 bouteille de limonade</li>
+                </ul>
+                <p>
+                    <span class="green">Petit conseil:</span> la préparer au moins 24h à l'avance. <br>
+                    <a href="http://www.750g.com/sangria-blanche-r3608.htm" target="_blank">Comment la préparer</a>
+                </p>
+            </div>
+            <div class="animate-show" ng-show="drink == 'alcool3' && participation.type == 'drink'">
+                <span class="green">Recette pour 10 personnes</span><br>
+                <ul>
+                    <li>2,5 L de vin rouge</li>
+                    <li>20 cl de porto rouge</li>
+                    <li>20 cl de triple sec (cointreau, grand marnier)</li>
+                    <li>Quelques tranches de gingembre</li>
+                    <li>20 cl de cognac</li>
+                    <li>Le jus et le zeste de 2 orange</li>
+                    <li>Le jus et le zeste de 2 citron</li>
+                    <li>2 bâtons de canelle</li>
+                    <li>Fruits de saison</li>
+                    <li>sucre</li>
+                </ul>
+                <p>
+                    <span class="green">Petit conseil:</span> la préparer au moins 24h à l'avance et bien brasser afin de dissoudre le sucre <br>
+                </p>
+            </div>
+            <div class="animate-show" ng-show="drink == 'alcool4' && participation.type == 'drink'">
+                <span class="green">Recette pour 1L</span><br>
+                <ul>
+                    <li>30 cl d' eau gazeuse (perrier, san pellegrino...)</li>
+                    <li>25 cl de campari</li>
+                    <li>55 cl de vin blanc</li>
+                    <li>Agrémenter votre verre d'une tranche d'orange.</li>
+                </ul>
+                <p>
+                    <span class="green">Petit conseil:</span> ne pas mettre l'eau gazeuse dans votre preparation, nous le mettrons au <span class="blue">frais</span>, nous le servirons au bon moment.
+                </p>
+            </div>
+            <div class="animate-show" ng-show="drink == 'alcool4' && participation.type == 'drink'">
+                <span class="green">Dites nous ce que vous avez l'intention de faire</span><br>
+                <div class="l-box-lrg">
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="pure-g">
+        <div class="pure-u-1 pure-u-md-1-5"></div>
+        <div class="pure-u-1 pure-u-md-3-5 big-top-border">
+            <h3>Je vais ramener :</h3>
+            <ul>
+                <li>Sablés au parmesan pour 
+                    <label for="seats" class="pure-number">
+                        <input id="seats" type="number" min="2" max="10" step="1" ng-model="family.covoitInfo.seats">
+                        dizaines de personnes
+                    </label>
+                </li>
+            </ul>
+            <p class="is-center"><button type="submit" class="pure-button pure-button-primary">Confirmer</button></p>
         </div>
     </div>
 </div>
 
 <div class="ribbon l-box-lrg pure-g">
-    <div id="dodo" class="pure-u-1 pure-u-md-1-2 l-box-lrg">
+    <span class="anchor" id="dodo"></span>
+    <div class="dodo pure-u-1 pure-u-md-1-2 l-box-lrg">
         <h2 class="content-head content-head-ribbon">Nuitée</h2>
         <h3>Plusieurs options s'offrent à vous</h3>
         <p>
@@ -225,7 +356,8 @@
             Dormir? <a href="https://youtu.be/bDbpzjbXUZI?t=1m11s" target="_blank">Ca ne fait pas parti de mes plans.</a> 
         </p>
     </div>
-    <div id="cadeau" class="pure-u-1 pure-u-md-1-2 l-box-lrg">
+    <span class="anchor" id="cadeau"></span>
+    <div class="pure-u-1 pure-u-md-1-2 l-box-lrg">
 
         <h2 class="content-head content-head-ribbon">Liste de mariage</h2>
 
@@ -238,13 +370,17 @@
 </div>
 
 
-<div id="covoiturage" class="content">
+<span class="anchor" id="covoiturage"></span>
+<div  class="content">
     <div class="pure-g">
         <div class="l-box-lrg pure-u-1 pure-u-md-1-3">
             <h2 class="is-center">Mémo</h2>
             <h4>Parking</h4>
             <p>
-                La mairie étant assez vigilante sur le problème de stationnement interdit les jours de mariage, nous vous conseillons de mettre de côté vos ardeurs criminelles. Nourrissez les parcmètres ou utilisez le parking souterrain à côté (1,20 €/h)
+                Pour la <span class="green">cérémonie</span>, la mairie étant assez vigilante sur le problème de stationnement interdit les jours de mariage, nous vous conseillons de mettre de côté vos ardeurs criminelles. Nourrissez les parcmètres ou utilisez le parking souterrain à côté (1,20 €/h)
+            </p>
+            <p>
+                A <span class="green">Saint-Yorre</span> nous baliseront les parkings proches du lieu de réception.
             </p>
             <h4>Départ</h4>
             <p>
@@ -272,7 +408,7 @@
                     </select>
                     <br>
                     <label for="seats" class="pure-number">
-                        <input id="seats" type="number" ng-model="family.covoitInfo.seats">
+                        <input id="seats" type="number" min="0" max="9" ng-model="family.covoitInfo.seats">
                         Places disponibles dans la voiture
                     </label>
                     <br> 

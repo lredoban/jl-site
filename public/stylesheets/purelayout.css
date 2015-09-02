@@ -23,6 +23,11 @@ h6 {
     color: #34495e;
 }
 
+strong{
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
 .pure-img-responsive {
     max-width: 100%;
     height: auto;
@@ -38,7 +43,22 @@ h6 {
 .green{
     color:#72FF79;
 }
+.blue{
+    color:#7BD6E8;
+}
+.content .green{    
+    color:#62905F;
+}
+.content .red{    
+    color:#8F494D;
+}
+.content.blue{
+    color:#75A8B0;
+}
 
+.ng-invalid{
+  color:#FF5568;
+}
 
 ul li{
     list-style-type:none; 
@@ -74,6 +94,10 @@ ul li{
 
 .chart-row{
     height: 100px;
+}
+
+.big-top-border{
+    border-top: 1px solid #9E9892;
 }
 
 /*
@@ -112,6 +136,13 @@ a.pure-button-primary {
     color: #0e3a5d;
     border-radius: 5px;
     font-size: 120%;
+}
+
+a.pure-button:hover{
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    color: #6FBEF3;
 }
 
 .button-xsmall {
@@ -156,15 +187,22 @@ a.pure-button-primary {
 }
 
 .home-menu a {
-    color: #6FBEF3;
+    color: #AECFE5;
 }
 .home-menu li a:hover,
 .home-menu li a:focus {
     background: none;
     border: none;
-    color: #AECFE5;
+    color: #6FBEF3;
+    text-decoration: none;
 }
 
+.anchor{
+   display:block;
+   height:48px; /* this is the height of your header */
+   margin-top:-48px; /* this is again negative value of the height of your header */
+   visibility:hidden;
+}
 
 /*
  * -- SPLASH STYLES --
@@ -173,6 +211,7 @@ a.pure-button-primary {
 
 .splash-container {
     background: #1f8dd6 url('../images/europe-band.jpg');
+    background-size: cover;
     opacity: 0.7;
     z-index: 1;
     overflow: hidden;
@@ -182,26 +221,6 @@ a.pure-button-primary {
     top: 0;
     left: 0;
     position: fixed !important;
-}
-
-#sheldon{
-    position: absolute;
-    text-align: center;
-    top:8em;
-    cursor: pointer;
-    opacity: 0;
-}
-
-#sheldon:hover{
-    opacity: 1;
-}
-
-#sheldon > h3{
-    color:white;
-}
-
-#sheldon > img{
-    height: 15em;
 }
 
 #clockdiv{
@@ -311,22 +330,22 @@ footer {
     font-size: 9px;
 }
 
-#dodo h2, #dodo h3, #cadeau h2{
+.dodo h2, .dodo h3, #cadeau h2{
     text-align: center;
     margin-top: 0;
 }
 
-#dodo h3{
+.dodo h3{
     color: white;
     font-size: 100%;
 }
 
-#dodo a, #dodo a:hover, #dodo a:visited, #dodo a:focus{
+.dodo a, .dodo a:hover, .dodo a:visited, .dodo a:focus{
     color:#978a79;
     text-decoration: underline;
 }
 
-#dodo i{
+.dodo i{
     color:#FFCA34;
 }
 
@@ -334,9 +353,10 @@ footer {
  * -- ANIMATIONS, UX MOFO--
  *
  */
-body{
-    -webkit-transition:all 4s;
-    transition:all 4s;
+
+*:hover{
+        -webkit-transition:all 0.5s;
+    transition:all 0.5s;
 }
 
 .animate-show.ng-hide-remove, 
@@ -415,6 +435,11 @@ body{
         .home-menu ul {
             float: right;
         }
+
+    .anchor{
+        height:59px; /* this is the height of your header */
+        margin-top:-59px; /* this is again negative value of the height of your header */
+    }
 
     /* We increase the height of the splash-container */
 /*    .splash-container {
