@@ -165,6 +165,7 @@ router.put('/Families/covoiturage', auth, function(req, res, next) {
       f.covoitInfo.rider = fam.covoitInfo.rider;
       if (f.covoitInfo.rider){
         f.covoitInfo.seats = fam.covoitInfo.seats;
+        console.log(fam.covoitInfo.driver._id);
         Guest.findById(fam.covoitInfo.driver._id, function(err,g){
             if(err || !f){ return next(err);}
             f.covoitInfo.driver = g;

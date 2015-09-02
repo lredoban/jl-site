@@ -490,7 +490,7 @@ function($scope, auth){
 			var template = $interpolate(message);
 			var fams = $scope.ffDeMars;
 			if (test)
-				n = 1;
+				n = 0;
 			else
 				n = fams.length - 1;
 			for (var i = n; i >= 0; i--) {
