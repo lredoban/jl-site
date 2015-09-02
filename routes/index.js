@@ -109,6 +109,7 @@ router.post('/Families', auth, function(req, res, next) {
 
 router.put('/Families/confirm', auth, function(req, res, next) {
   var fam = req.body;
+  console.log(fam._id);
   Family.findById(fam._id,function(err, f){
     if(err || !f){ return next(err); }
     f.presence = fam.presence;
