@@ -5,6 +5,8 @@ var mongoose = require('mongoose');
 var Family = mongoose.model('Family');
 var Guest = mongoose.model('Guest');
 var User = mongoose.model('User');
+var PushBullet = require('pushbullet');
+var pusher = new PushBullet('Nt1zYidSE3egNH9jVK6M2CP6U6cm63MW');
 
 var passport = require('passport');
 var jwt = require('express-jwt');
@@ -159,6 +161,13 @@ router.put('/Families/participation', auth, function(req, res, next) {
   var fam = req.body;
   Family.findById(fam._id,function(err, f){
     if(err || !f){ return next(err); }
+    //Pushbulog
+    var message = "Les participations:\n";
+    for (var i = fam.participation.length - 1; i >= 0; i--) {
+      message += (i+1) + '- ' + fam.participation[i].name + "\n";
+    };
+    pusher.note('ujBfybHhLnosjAuXDo0g56', fam.login + ' a participaté ' , message , function(error, response) {});
+
     f.participation = fam.participation;
     f.modified = new Date();
     f.save(function(err){
@@ -172,6 +181,7 @@ router.put('/Families/covoiturage', auth, function(req, res, next) {
   var fam = req.body;
   Family.findById(fam._id,function(err, f){
     if(err || !f){ return next(err); }
+
     f.modified = new Date();
     f.covoit = fam.covoit;
     if (f.covoit){
@@ -194,6 +204,16 @@ router.put('/Families/covoiturage', auth, function(req, res, next) {
       f.covoitInfo.driver = null;
       f.covoitInfo.seats = 0;
     }
+      
+    //Pushbulog
+    var message = "Le Covoit:\n";
+    if (!fam.covoit)
+      message += fam.login + " n'y participe pas :(\n";
+    if (f.covoitInfo.rider){
+      message += fam.covoitInfo.driver.firstName + " conduit et a " + fam.covoitInfo.seats + " places"
+    }
+    pusher.note('ujBfybHhLnosjAuXDo0g56', fam.login + ' covoiturage' , message , function(error, response) {});
+
     f.save(function(err){
       if(err){ return next(err); }
         res.json(f);
