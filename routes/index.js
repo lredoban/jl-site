@@ -74,9 +74,8 @@ router.post('/login', function(req, res, next){
 
 //API
 router.get('/Families', auth, function(req, res, next) {
-  Family.find(function(err, families){
+  Family.find().populate('guests covoitInfo.driver').exec(function(err, families){
     if(err){ return next(err); }
-
     res.json(families);
   });
 });

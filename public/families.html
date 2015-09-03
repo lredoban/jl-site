@@ -48,8 +48,9 @@
 					</form>
 				</div>
 			</div>
-			  <div  ng-repeat="family in ffDeMars = (families | filter:famSearch | orderBy:['-presence', '-recu' ,'-guests.length'])" >
-			  	<div class="panel panel-default"  ng-class="{'panel-success': family.presence, 'panel-danger': !family.recu}">
+
+			<div  ng-repeat="family in ffDeMars = (families | filter:famSearch | orderBy:['-participation.length','-presence', '-recu' ,'-guests.length'])" >
+			  	<div class="panel panel-default"  ng-class="{'panel-success': family.participation.length, 'panel-danger': !family.recu}">
 			  	  <div class="panel-heading">
 			        <div style="float:right;">
 			            reçu: <a href='#' ng-click='switchRecu(family)'><i class="fa fa-check-square-o" ng-show="family.recu"></i><i class="fa fa-square-o" ng-hide="family.recu"></i></a>
@@ -69,44 +70,75 @@
 			          <button ng-show='edit' type="submit" ng-click='confirm(family)' class="pure-button pure-button-primary">Sauvegarder</button>
 			        </h2>
 			      </div>
-			  	  <div class="panel-body">
-			        <ul class="list-inline" style="float:right;" ng-show="family.presence">
-			          <li ng-repeat="(fete, val) in family.fetes">
-			            {{fete}}: <i class="fa fa-check-square-o" ng-show="val"></i><i class="fa fa-square-o" ng-hide="val"></i>
-			          </li>
-			          <li ng-show="edit"><input type="text" ng-model="family.oldmdp"></li>
-			          <li ng-hide="edit">mdp: {{family.oldmdp}}</li>
-			        </ul>
-			        	
-			        <address ng-hide="edit">
-			            {{family.address}}<br>
-			            {{family.city}}<br>
-			            {{family.zipCode}}<br>
-			          <div class="contact" ng-show="family.presence">
-			            <i class="fa fa-envelope-o"></i> : <a href="mailto:{{family.email}}">{{family.email}}</a> <br>
-			            <i class="fa fa-mobile"></i> : {{family.tel}}
-			          </div>
-			        </address>
-			        <address ng-show="edit">
-			            <input type="text" ng-show="edit" ng-model="family.address"><br>
-			            <input type="text" ng-show="edit" ng-model="family.city"><br>
-			            <input type="text" ng-show="edit" ng-model="family.zipCode"><br>
-			          <div class="contact" ng-show="family.presence">
-			            <i class="fa fa-envelope-o"></i> : <input type="text" ng-show="edit" ng-model="family.email"><br>
-			            <i class="fa fa-mobile"></i> : <input type="text" ng-show="edit" ng-model="family.tel">
-			          </div>
-			        </address>
 
-			        <form class="pure-form" ng-show="sms">
-					    <fieldset class="pure-group">
-					        <textarea class="pure-input-1-2" ng-model="messageSms"></textarea>
-					    </fieldset>
-					
-					    <button ng-click="sendSms(family, messageSms); sms = false" type="submit" class="pure-button pure-input-1-2 pure-button-primary">Envoyer</button>
-					</form>
+			  	  <div class="panel-body">
+			  	  	<div class="pure-g">
+			  	  		<div class="pure-u-1 pure-u-md-1-3 l-box">
+					        <address ng-hide="edit">
+					            {{family.address}}<br>
+					            {{family.city}}<br>
+					            {{family.zipCode}}<br>
+					          <div class="contact" ng-show="family.presence">
+					            <i class="fa fa-envelope-o"></i> : <a href="mailto:{{family.email}}">{{family.email}}</a> <br>
+					            <i class="fa fa-mobile"></i> : {{family.tel}}
+					          </div>
+					        </address>
+					        <address ng-show="edit">
+					            <input type="text" ng-show="edit" ng-model="family.address"><br>
+					            <input type="text" ng-show="edit" ng-model="family.city"><br>
+					            <input type="text" ng-show="edit" ng-model="family.zipCode"><br>
+					          <div class="contact" ng-show="family.presence">
+					            <i class="fa fa-envelope-o"></i> : <input type="text" ng-show="edit" ng-model="family.email"><br>
+					            <i class="fa fa-mobile"></i> : <input type="text" ng-show="edit" ng-model="family.tel">
+					          </div>
+					        </address>
+
+					        <form class="pure-form" ng-show="sms">
+							    <fieldset class="pure-group">
+							        <textarea class="pure-input-1-2" ng-model="messageSms"></textarea>
+							    </fieldset>
+							
+							    <button ng-click="sendSms(family, messageSms); sms = false" type="submit" class="pure-button pure-input-1-2 pure-button-primary">Envoyer</button>
+							</form>			  	  			
+			  	  		</div>
+			  	  		<div class="pure-u-1 pure-u-md-1-3 l-box">
+							<h3>Covoiturage <i class="fa fa-check-square-o" ng-show="{{family.covoit}}"></i><i class="fa fa-square-o" ng-hide="{{family.covoit}}"></i></h3>
+							<ul ng-if="family.covoitInfo.rider">
+								<li>
+									Conducteur: {{family.covoitInfo.driver.firstName}}
+								</li>
+								<li>
+									Seats: {{family.covoitInfo.seats}}
+								</li>
+							</ul>
+
+			  	  		</div>
+			  	  		<div class="pure-u-1 pure-u-md-1-3 l-box">
+			  	  			<ul class="list-inline" ng-show="family.presence">
+			  	  				<li>Dodo: <i class="fa fa-check-square-o" ng-show="{{family.dodo}}"></i><i class="fa fa-square-o" ng-hide="{{family.dodo}}"></i></li>
+			          			<li ng-repeat="(fete, val) in family.fetes">
+			          			  {{fete}}: <i class="fa fa-check-square-o" ng-show="val"></i><i class="fa fa-square-o" ng-hide="val"></i>
+			          			</li>
+			          			<li ng-show="edit"><input type="text" ng-model="family.oldmdp"></li>
+			          			<li ng-hide="edit">mdp: {{family.oldmdp}}</li>
+			        		</ul>
+			  	  		</div>
+			  	  		<div class="pure-u-1 lg-box-lrg">
+			  	  			<h3>Participation</h3>
+			  	  			<ol>
+            				    <li ng-repeat="thing in family.participation">{{thing.name}}  
+            				        <span ng-if="thing.categorie == 'cook'"> pour au moins 20 personnes</span>
+            				        <span ng-if="thing.categorie == 'drink'"> au moins 4L</span>
+            				        <span ng-if="thing.categorie == 'bring'"> au moins 1kg</span>
+            				    </li>
+			  	  			</ol>
+			  	  		</div>
+			  	  	</div>
 			  	  </div>
+
 			  	</div>
-			  </div>
+			</div>
+
 		  	<div ng-hide="isAdmin()">
 				<h3>Only admin can add a Family.</h3>
 			</div>

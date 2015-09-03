@@ -312,9 +312,6 @@ function($scope, auth){
 	function($scope, families, family, auth, ngNotify, $location, $anchorScroll){
 		$scope.family = family;
 		$scope.participation = family.participation;
-
-		console.log(family.participation);
-
 		$scope.liste = [
 			{categorie:"cook", name:"Sablés au parmesan"},
 			{categorie:"cook", name:"Verrines saumon fumé et mascarpone citronné"},
