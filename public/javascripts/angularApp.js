@@ -423,6 +423,21 @@ function($scope, auth){
 		$scope.isLoggedIn = auth.isLoggedIn;
 		$scope.isAdmin = auth.isAdmin;
 		$scope.ffDeMars = $scope.families;
+		$scope.liste = [
+			{categorie:"cook", name:"Sablés au parmesan", number:0},
+			{categorie:"cook", name:"Verrines saumon fumé et mascarpone citronné", number:0},
+			{categorie:"cook", name:"Verrines de melon, mozzarella, jambon cru", number:0},
+			{categorie:"cook", name:"Gâteaux, cakes", number:0},
+			{categorie:"cook", name:"J'ai une recette perso qui va épater tout le monde", number:0},
+			{categorie:"drink", name:"Mojito - L'incontournable", number:0},
+			{categorie:"drink", name:"Sangria blanche - L'exquise", number:0},
+			{categorie:"drink", name:"Sangria rouge - La chaleureuse", number:0},
+			{categorie:"drink", name:"Spritz - Le cocktail le plus coté du Canal Saint Martin", number:0},
+			{categorie:"drink", name:"Autre cocktail (ex: punch à Jaquet) ou softs", number:0},
+			{categorie:"bring", name:"Légumes, Fruits", number:0},
+			{categorie:"bring", name:"Oléagineux (Amandes, noisettes,noix) ", number:0},
+			{categorie:"bring", name:"Chips à l'ancienne, cacahuètes", number:0},
+		];
 
 		var loadChart = function(){
 			$timeout(function(){
@@ -433,6 +448,11 @@ function($scope, auth){
 				var mairie = 0;
 				var soiree = 0;
 				var invites = 0;
+				var dodo = 0;
+				var covoit = 0;
+				var seats = 0;
+				var car = 0;
+
 				for (var i = 0; i < $scope.ffDeMars.length; i++)
 				{
 					if ($scope.ffDeMars[i].presence === true)
@@ -445,6 +465,23 @@ function($scope, auth){
 							brunch += 1;
 						if ($scope.ffDeMars[i].fetes.soiree)
 							soiree += 1;
+						if ($scope.ffDeMars[i].dodo)
+							dodo += $scope.ffDeMars[i].guests.length;
+						if ($scope.ffDeMars[i].covoit){
+							covoit += $scope.ffDeMars[i].guests.length;
+							if ($scope.ffDeMars[i].covoitInfo.rider){
+								seats += $scope.ffDeMars[i].covoitInfo.seats;
+								car += 1;
+							}
+						}
+						if ($scope.ffDeMars[i].participation.length > 0){
+							for (var l = $scope.ffDeMars[i].participation.length - 1; l >= 0; l--) {
+								for (var j = $scope.liste.length - 1; j >= 0; j--) {
+									if ($scope.liste[j].name == $scope.ffDeMars[i].participation[l].name)
+										$scope.liste[j].number ++;
+								};
+							};
+						}
 					}
 					if ($scope.ffDeMars[i].recu)
 						recu += 1;
@@ -453,6 +490,10 @@ function($scope, auth){
 				}
 				$scope.present = present;
 				$scope.invites = invites;
+				$scope.dodo = dodo;
+				$scope.covoit = covoit;
+				$scope.seats = seats;
+				$scope.car = car;
 				if ($scope.ffDeMars.length <= 0)
 					pasRep = 0;
 				else

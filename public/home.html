@@ -250,7 +250,7 @@
         <div class="pure-u-1 pure-u-md-1-5"></div>
         <div class="pure-u-1 pure-u-md-3-5 big-top-border">
             <h3>Je vais ramener :</h3>
-            <div class="red" ng-if="family.participation == 0">Noubliez pas de cliquer sur un petit caddie vert ;-)</div>
+            <div class="red" ng-if="family.participation.length == 0">Noubliez pas de cliquer sur un petit caddie vert ;-)</div>
             <ul>
                 <li ng-repeat="thing in family.participation">{{thing.name}}  
                     <span ng-if="thing.categorie == 'cook'"> pour au moins 20 personnes</span>

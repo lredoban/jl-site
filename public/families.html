@@ -47,6 +47,24 @@
 					    <button ng-click="bulkSendSms(messageSmsLauncher,testLauncher); smsLauncher = testLauncher" type="submit" class="pure-button pureinput-1-2 pure-button-primary">Envoyer</button>
 					</form>
 				</div>
+				<div class="pure-u-1">
+					<p>
+						<span class="green">{{dodo}}</span> personnes dorment sur place. <br>
+						<span class="green">{{covoit}}</span> participants au covoiturage, {{car}} voitures, {{seats}} sièges passagers.
+					</p>
+					<h3>            
+						<label for="participation" class="pure-checkbox">
+                			<input id="participation" type="checkbox" ng-model="showParticipation" style="display:none">
+                			Participations <i class="fa fa-chevron-down" ng-hide="showParticipation"></i>
+                			<i class="fa fa-chevron-up" ng-show="showParticipation"></i>
+            			</label>
+            		</h3>
+						<ul class="animate-show" ng-show="showParticipation">
+							<li ng-repeat="item in liste">
+								[{{item.categorie}}] {{item.name}}: <span class="green">{{item.number}}</span>
+							</li>
+						</ul>
+				</div>
 			</div>
 
 			<div  ng-repeat="family in ffDeMars = (families | filter:famSearch | orderBy:['-participation.length','-presence', '-recu' ,'-guests.length'])" >
