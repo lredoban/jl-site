@@ -328,7 +328,8 @@
                     <span class="animate-show red" ng-hide="family.covoit">Allez viens on est bien!!</span>
                     <label for="rider" class="pure-checkbox">
                         <input id="rider" type="checkbox" ng-model="family.covoitInfo.rider">
-                        Je  viens avec une voiture.
+                        <span ng-show="family.covoitInfo.rider">Nous avons un conducteur et une voiture.</span>
+                        <span ng-hide="family.covoitInfo.rider">Pas de voiture nous sommes que des passagers</span>
                     </label>
                     <label for="driver">Conducteur:
                     <select id="driver" ng-model="family.covoitInfo.driver" ng-options="guest.firstName for guest in family.guests track by guest.firstName">
