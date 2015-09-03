@@ -424,19 +424,19 @@ function($scope, auth){
 		$scope.isAdmin = auth.isAdmin;
 		$scope.ffDeMars = $scope.families;
 		$scope.liste = [
-			{categorie:"cook", name:"Sablés au parmesan", number:0},
-			{categorie:"cook", name:"Verrines saumon fumé et mascarpone citronné", number:0},
-			{categorie:"cook", name:"Verrines de melon, mozzarella, jambon cru", number:0},
-			{categorie:"cook", name:"Gâteaux, cakes", number:0},
-			{categorie:"cook", name:"J'ai une recette perso qui va épater tout le monde", number:0},
-			{categorie:"drink", name:"Mojito - L'incontournable", number:0},
-			{categorie:"drink", name:"Sangria blanche - L'exquise", number:0},
-			{categorie:"drink", name:"Sangria rouge - La chaleureuse", number:0},
-			{categorie:"drink", name:"Spritz - Le cocktail le plus coté du Canal Saint Martin", number:0},
-			{categorie:"drink", name:"Autre cocktail (ex: punch à Jaquet) ou softs", number:0},
-			{categorie:"bring", name:"Légumes, Fruits", number:0},
-			{categorie:"bring", name:"Oléagineux (Amandes, noisettes,noix) ", number:0},
-			{categorie:"bring", name:"Chips à l'ancienne, cacahuètes", number:0},
+			{categorie:"cook", name:"Sablés au parmesan", number:0, limit:10},
+			{categorie:"cook", name:"Verrines saumon fumé et mascarpone citronné", number:0, limit:10},
+			{categorie:"cook", name:"Verrines de melon, mozzarella, jambon cru", number:0, limit:10},
+			{categorie:"cook", name:"Gâteaux, cakes", number:0, limit:10},
+			{categorie:"cook", name:"J'ai une recette perso qui va épater tout le monde", number:0, limit:10},
+			{categorie:"drink", name:"Mojito - L'incontournable", number:0, limit:10},
+			{categorie:"drink", name:"Sangria blanche - L'exquise", number:0, limit:8},
+			{categorie:"drink", name:"Sangria rouge - La chaleureuse", number:0, limit:8},
+			{categorie:"drink", name:"Spritz - Le cocktail le plus coté du Canal Saint Martin", number:0, limit:6},
+			{categorie:"drink", name:"Autre cocktail (ex: punch à Jaquet) ou softs", number:0, limit:5},
+			{categorie:"bring", name:"Légumes, Fruits", number:0, limit:100},
+			{categorie:"bring", name:"Oléagineux (Amandes, noisettes,noix) ", number:0, limit:100},
+			{categorie:"bring", name:"Chips à l'ancienne, cacahuètes", number:0, limit:100},
 		];
 
 		var loadChart = function(){
