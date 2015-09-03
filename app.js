@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 require('./models/Families');
 require('./models/Guests');
+require('./models/Settings');
 require('./models/Users');
 require('./config/passport');
 

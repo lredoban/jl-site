@@ -14,7 +14,10 @@ angular.module('JL', ['ui.router', 'ngAnimate', 'ngNotify', 'ngSanitize', 'n3-pi
 			  	resolve: {
 			  		family: ['families', 'auth', function(families, auth){
 			  			return families.get(auth.currentFamily());
-			  	}]
+			  		}],
+			  		settings : ['families', 'auth', function(families){
+			  			return families.getSettings('participationsList');
+			  		}]
 			  }
 			})
 			.state('login', {
@@ -83,6 +86,9 @@ angular.module('JL', ['ui.router', 'ngAnimate', 'ngNotify', 'ngSanitize', 'n3-pi
 			  resolve: {
 			  	famPromise : ['families', function(families){
 			  		return families.getAll();
+			  	}],
+			  	settings : ['families', 'auth', function(families){
+			  		return families.getSettings('participationsList');
 			  	}]
 			  }
 			})
@@ -213,6 +219,14 @@ angular.module('JL', ['ui.router', 'ngAnimate', 'ngNotify', 'ngSanitize', 'n3-pi
 	  });
 	};
 
+		o.getSettings = function(name){
+		return $http.get('/Settings/' + name, {
+  			headers: {Authorization: 'Bearer '+auth.getToken()}
+  		}).then(function(res){
+			return res.data;
+		});
+	};
+
 	o.addGuest = function(id, guest) {
  		return $http.post('/Families/' + id + '/guests', guest, {
  			headers: {Authorization: 'Bearer '+auth.getToken()}
@@ -251,6 +265,13 @@ angular.module('JL', ['ui.router', 'ngAnimate', 'ngNotify', 'ngSanitize', 'n3-pi
 
 	o.participation = function (family){
 		return $http.put('/Families/participation', family, {
+ 			headers: {Authorization: 'Bearer '+auth.getToken()}
+ 		});
+	};
+
+	o.enableSetting = function (name,id){
+		body = {'id':id};
+		return $http.put('/Settings/'+ name + '/enable', body, {
  			headers: {Authorization: 'Bearer '+auth.getToken()}
  		});
 	};
@@ -305,28 +326,15 @@ function($scope, auth){
 	'$scope',
 	'families',
 	'family',
+	'settings',
 	'auth',
 	'ngNotify',
 	'$location',
 	'$anchorScroll',
-	function($scope, families, family, auth, ngNotify, $location, $anchorScroll){
+	function($scope, families, family, settings, auth, ngNotify, $location, $anchorScroll){
 		$scope.family = family;
 		$scope.participation = family.participation;
-		$scope.liste = [
-			{categorie:"cook", name:"Sablés au parmesan"},
-			{categorie:"cook", name:"Verrines saumon fumé et mascarpone citronné"},
-			{categorie:"cook", name:"Verrines de melon, mozzarella, jambon cru"},
-			{categorie:"cook", name:"Gâteaux, cakes"},
-			{categorie:"cook", name:"J'ai une recette perso qui va épater tout le monde"},
-			{categorie:"drink", name:"Mojito - L'incontournable"},
-			{categorie:"drink", name:"Sangria blanche - L'exquise"},
-			{categorie:"drink", name:"Sangria rouge - La chaleureuse"},
-			{categorie:"drink", name:"Spritz - Le cocktail le plus coté du Canal Saint Martin"},
-			{categorie:"drink", name:"Autre cocktail (ex: punch à Jaquet) ou softs"},
-			{categorie:"bring", name:"Légumes, Fruits"},
-			{categorie:"bring", name:"Oléagineux (Amandes, noisettes,noix) "},
-			{categorie:"bring", name:"Chips à l'ancienne, cacahuètes"},
-		];
+		$scope.liste = settings;
 
 		if (!family.hasOwnProperty('covoit')){
 			family.covoit = true;
@@ -413,31 +421,19 @@ function($scope, auth){
 	'$scope',
 	'families',
 	'pushbullet',
+	'settings',
 	'auth',
 	'ngNotify',
 	'$timeout',
 	'$interpolate',
-	function($scope, families, pushbullet, auth, ngNotify, $timeout, $interpolate){
+	function($scope, families, pushbullet, settings, auth, ngNotify, $timeout, $interpolate){
 		$scope.test = "We are getting Married!!! \\o/";
 		$scope.families = families.families;
 		$scope.isLoggedIn = auth.isLoggedIn;
 		$scope.isAdmin = auth.isAdmin;
 		$scope.ffDeMars = $scope.families;
-		$scope.liste = [
-			{categorie:"cook", name:"Sablés au parmesan", number:0, limit:10},
-			{categorie:"cook", name:"Verrines saumon fumé et mascarpone citronné", number:0, limit:10},
-			{categorie:"cook", name:"Verrines de melon, mozzarella, jambon cru", number:0, limit:10},
-			{categorie:"cook", name:"Gâteaux, cakes", number:0, limit:10},
-			{categorie:"cook", name:"J'ai une recette perso qui va épater tout le monde", number:0, limit:10},
-			{categorie:"drink", name:"Mojito - L'incontournable", number:0, limit:10},
-			{categorie:"drink", name:"Sangria blanche - L'exquise", number:0, limit:8},
-			{categorie:"drink", name:"Sangria rouge - La chaleureuse", number:0, limit:8},
-			{categorie:"drink", name:"Spritz - Le cocktail le plus coté du Canal Saint Martin", number:0, limit:6},
-			{categorie:"drink", name:"Autre cocktail (ex: punch à Jaquet) ou softs", number:0, limit:5},
-			{categorie:"bring", name:"Légumes, Fruits", number:0, limit:100},
-			{categorie:"bring", name:"Oléagineux (Amandes, noisettes,noix) ", number:0, limit:100},
-			{categorie:"bring", name:"Chips à l'ancienne, cacahuètes", number:0, limit:100},
-		];
+		$scope.liste = settings;
+		$scope.enableSetting = families.enableSetting;
 
 		var loadChart = function(){
 			$timeout(function(){

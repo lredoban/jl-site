@@ -90,27 +90,27 @@
             <div class="animate-show" ng-show="participation.categorie == 'cook'">
                 <p class="indic">Nous avons besoin de jolis apéritifs à déguster avec le champagne et de bons gateaux à déguster le lendemain</p>
                 <form class="pure-form">
-                    <label ng-repeat="item in liste | filter:item.categorie='cook'" for="{{item.categorie}}{{$index}}" class="pure-radio">
+                    <label ng-repeat="item in liste | filter:item.categorie='cook'" for="{{item.categorie}}{{$index}}" class="pure-radio" >
                         <input id="{{item.categorie}}{{$index}}" ng-model="$parent.cook" type="radio" value="apero{{$index + 1}}">
-                        {{item.name}} <a href="" class="add" ng-click="addPart(item)"><i class="fa fa-cart-plus green"></i></a>
+                        {{item.name}} <a href="" class="add" ng-click="addPart(item)" ng-show="item.enable"><i class="fa fa-cart-plus green"></i></a><span ng-hide="item.enable" class="red"><i class="fa fa-ban"></i> indisponible</span>
                     </label>
                 </form>
             </div>
             <div class="animate-show" ng-show="participation.categorie == 'drink'">
                 <p class="indic">Nous avons un peu de vin, 2-3 bières, il manque quelques cocktails sympathiques pour agrémenter la soirée</p>
                 <form class="pure-form">
-                    <label ng-repeat="item in liste | filter:item.categorie='drink'" for="{{item.categorie}}{{$index}}" class="pure-radio">
+                    <label ng-repeat="item in liste | filter:item.categorie='drink'" for="{{item.categorie}}{{$index}}" class="pure-radio" >
                         <input id="{{item.categorie}}{{$index}}" ng-model="$parent.drink" type="radio" value="alcool{{$index + 1}}">
-                        {{item.name}} <a href="" class="add" ng-click="addPart(item)"><i class="fa fa-cart-plus green"></i></a>
+                        {{item.name}} <a href="" class="add" ng-click="addPart(item)" ng-show="item.enable"><i class="fa fa-cart-plus green"></i></a><span ng-hide="item.enable" class="red"><i class="fa fa-ban"></i> indisponible</span>
                     </label>
                 </form>
             </div>
             <div class="animate-show" ng-show="participation.categorie == 'bring'">
                 <p class="indic"></p>
                 <form class="pure-form">
-                    <label ng-repeat="item in liste | filter:item.categorie='bring'" for="{{item.categorie}}{{$index}}" class="pure-radio">
+                    <label ng-repeat="item in liste | filter:item.categorie='bring'" for="{{item.categorie}}{{$index}}" class="pure-radio" >
                         <input id="{{item.categorie}}{{$index}}" ng-model="$parent.bring" type="radio" value="achat{{$index + 1}}">
-                        {{item.name}} <a href="" class="add" ng-click="addPart(item)"><i class="fa fa-cart-plus green"></i></a>
+                        {{item.name}} <a href="" class="add" ng-click="addPart(item)" ng-show="item.enable"><i class="fa fa-cart-plus green"></i></a><span ng-hide="item.enable" class="red"><i class="fa fa-ban"></i> indisponible</span>
                     </label>
                 </form>                
             </div>

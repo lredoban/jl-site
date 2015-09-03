@@ -4,6 +4,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Family = mongoose.model('Family');
 var Guest = mongoose.model('Guest');
+var Settings = mongoose.model('Settings');
 var User = mongoose.model('User');
 var PushBullet = require('pushbullet');
 var pusher = new PushBullet('Nt1zYidSE3egNH9jVK6M2CP6U6cm63MW');
@@ -75,6 +76,25 @@ router.post('/login', function(req, res, next){
 
 
 //API
+router.get('/Settings/:name', auth,function(req, res, next){
+  Settings.findOne('{name:"'+ req.params.name + '"}').lean().exec(function(err, s){
+    if (err||!s){return next(null);}
+      res.json(s.data);
+  });  
+});
+
+router.put('/Settings/:name/enable', auth,function(req, res, next){
+  var i = req.body.id;
+  Settings.findOne('{name:"'+ req.params.name + '"}').exec(function(err, s){
+    if (err||!s){return next(null);}
+    s.data[i].enable = !s.data[i].enable;
+    s.save(function(err){
+    if(err){ return next(err); }
+        res.json(s.data[i]);
+    });
+  });  
+});
+
 router.get('/Families', auth, function(req, res, next) {
   Family.find().populate('guests covoitInfo.driver').exec(function(err, families){
     if(err){ return next(err); }
