@@ -319,28 +319,32 @@
             <p>
                 Pour que tout le monde fasse connaissance le samedi, nous allons mélanger les voitures en créant des équipes aléatoires. Elles auront la durée du trajet pour s'affronter lors d'un jeu palpitant et inédit sur la planète bleue. 
             </p>
-            <form class="pure-form pure-form-aligned">
+            <form name="covoitForm" class="pure-form pure-form-aligned">
                 <fieldset>
                     <label for="covoit" class="pure-checkbox">
                         <input id="covoit" type="checkbox" ng-model="family.covoit">
                         Nous participons au covoiturage
                     </label>
                     <span class="animate-show red" ng-hide="family.covoit">Allez viens on est bien!!</span>
-                    <label ng-show="family.covoit" for="rider" class="pure-checkbox">
-                        <input id="rider" type="checkbox" ng-model="family.covoitInfo.rider">
-                        <span ng-show="family.covoitInfo.rider">Nous avons un conducteur et une voiture.</span>
-                        <span ng-hide="family.covoitInfo.rider">Pas de voiture nous sommes que des passagers</span>
-                    </label>
-                    <label ng-show="family.covoit && family.covoitInfo.rider" for="driver">Conducteur:
-                        <select id="driver" ng-model="family.covoitInfo.driver" ng-options="guest.firstName for guest in family.guests track by guest.firstName">
+                    
+                    <div ng-show="family.covoit">
+                        <span> Nous avons un conducteur et une voiture?</span>
+                        <span class="riderIO" ng-class="{'selected':family.covoitInfo.rider}" ng-click="family.covoitInfo.rider = true">OUI</span>
+                        <span class="riderIO" ng-class="{'selected':!family.covoitInfo.rider}" ng-click="family.covoitInfo.rider = false">NON</span>
+                    </div>
+
+                    <label ng-if="family.covoit && family.covoitInfo.rider" for="driver">
+                        <br>
+                        Conducteur:
+                        <select id="driver" ng-model="family.covoitInfo.driver" ng-options="guest.firstName for guest in family.guests track by guest.firstName" required>
                         </select>
                         <br>
                     </label>
-                    <label ng-show="family.covoit  && family.covoitInfo.rider" for="seats" class="pure-number">
-                        J'ai une voiture <input id="seats" type="number" min="2" max="9" ng-model="family.covoitInfo.seats"> places.
+                    <label ng-if="family.covoit  && family.covoitInfo.rider" for="seats" class="pure-number">
+                        J'ai une voiture <input id="seats" type="number" min="2" max="9" ng-model="family.covoitInfo.seats" required> places.
                         <br> 
                     </label>
-                    <p class="is-center"><button type="submit" ng-click="covoiturage('family')" class="pure-button pure-button-primary">Je valide</button></p>
+                    <p class="is-center"><button type="submit" ng-click="covoitForm.$valid ? covoiturage('family'):angular.noop()" class="pure-button pure-button-primary">Je valide</button></p>
                 </fieldset>
             </form>
         </div>

@@ -84,7 +84,19 @@ a.add:hover{
 }
 
 .ng-invalid{
-  color:#FF5568;
+
+}
+
+.riderIO{
+    background-color:#F5C1B4;
+    color: white;
+    padding: 0.2em 0.5em;
+    border-radius: 0.3em;
+    cursor: pointer;
+}
+
+.selected{
+    background-color:#3C546C; 
 }
 
 ul li{
