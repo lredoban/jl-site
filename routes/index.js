@@ -143,6 +143,9 @@ router.put('/Families/confirm', auth, function(req, res, next) {
     f.zipCode = fam.zipCode;
     f.city = fam.city;
     f.oldmdp = fam.oldmdp;
+    f.covoit = fam.covoit;
+    f.covoitInfo.rider = fam.covoitInfo.rider;
+    f.covoitInfo.seats = fam.covoitInfo.seats;
     f.modified = new Date();
     f.save(function(err){
       if(err){ return next(err); }

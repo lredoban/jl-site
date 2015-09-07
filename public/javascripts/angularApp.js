@@ -568,6 +568,17 @@ function($scope, auth){
     				html: true
 				});
 			});
+			families.covoiturage(family).success(function(data, status){
+				ngNotify.set('Covoiturage aussi ' + data, {position:'top',type: 'success',theme: 'pitchy'});
+			}).error(function(err){
+				ngNotify.set(err, {
+					position:'top',
+					type: 'error',
+					sticky:true,
+    				theme: 'pitchy',
+    				html: true
+				});
+			});
 
 		};
 

@@ -87,7 +87,7 @@
 			          <a href="#/family/{{family._id}}" ng-hide="edit">{{family.login}}</a>
 			          <input type="text" ng-show="edit" ng-model="family.login">
 			          <span class="tab" ng-show="family.presence">{{family.guests.length}} invité(s)</span>
-			          <button ng-show='edit' type="submit" ng-click='confirm(family)' class="pure-button pure-button-primary">Sauvegarder</button>
+			          <button ng-show='edit' type="submit" ng-click='confirm(family); edit = false;' class="pure-button pure-button-primary">Sauvegarder</button>
 			        </h2>
 			      </div>
 
@@ -122,14 +122,31 @@
 							</form>			  	  			
 			  	  		</div>
 			  	  		<div class="pure-u-1 pure-u-md-1-3 l-box">
-							<h3>Covoiturage <i class="fa fa-check-square-o" ng-show="{{family.covoit}}"></i><i class="fa fa-square-o" ng-hide="{{family.covoit}}"></i></h3>
+							 
+							<h3 ng-hide="edit">Covoiturage
+		                        	<i class="fa fa-check-square-o" ng-show="{{family.covoit}}"></i><i class="fa fa-square-o" ng-hide="{{family.covoit}}"></i>
+		                    </h3>
+							<label ng-show="edit" for="covoitEdit{{$index}}" class="pure-checkbox">
+		                       Covoiturage <input id="covoitEdit{{$index}}"  type="checkbox" ng-model="family.covoit">
+		                    </label>
+
+							<label ng-show="edit" for="rider{{$index}}" class="pure-checkbox">
+								Voiture <input id="rider{{$index}}" type="checkbox" ng-model="family.covoitInfo.rider">
+							</label>
+							<label ng-if="edit && family.covoit && family.covoitInfo.rider" for="driver{{$index}}">Conducteur:
+		                        <select id="driver{{$index}}" ng-model="family.covoitInfo.driver" ng-options="guest.firstName for guest in family.guests track by guest.firstName">
+		                        </select>
+		                        <br>
+		                    </label>
+
 							<ul ng-if="family.covoitInfo.rider">
-								<li>
+								<li >
 									Conducteur: {{family.covoitInfo.driver.firstName}}
 								</li>
-								<li>
+								<li ng-hide="edit">
 									Seats: {{family.covoitInfo.seats}}
 								</li>
+								<li ng-show="edit">Seats: <input type="number" ng-model="family.covoitInfo.seats"></li>
 							</ul>
 
 			  	  		</div>
