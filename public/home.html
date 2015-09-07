@@ -326,21 +326,20 @@
                         Nous participons au covoiturage
                     </label>
                     <span class="animate-show red" ng-hide="family.covoit">Allez viens on est bien!!</span>
-                    <label for="rider" class="pure-checkbox">
+                    <label ng-show="family.covoit" for="rider" class="pure-checkbox">
                         <input id="rider" type="checkbox" ng-model="family.covoitInfo.rider">
                         <span ng-show="family.covoitInfo.rider">Nous avons un conducteur et une voiture.</span>
                         <span ng-hide="family.covoitInfo.rider">Pas de voiture nous sommes que des passagers</span>
                     </label>
-                    <label for="driver">Conducteur:
-                    <select id="driver" ng-model="family.covoitInfo.driver" ng-options="guest.firstName for guest in family.guests track by guest.firstName">
-                    </select>
+                    <label ng-show="family.covoit && family.covoitInfo.rider" for="driver">Conducteur:
+                        <select id="driver" ng-model="family.covoitInfo.driver" ng-options="guest.firstName for guest in family.guests track by guest.firstName">
+                        </select>
+                        <br>
                     </label>
-                    <br>
-                    <label for="seats" class="pure-number">
-                        <input id="seats" type="number" min="0" max="9" ng-model="family.covoitInfo.seats">
-                        sièges passagers disponibles dans la voiture
+                    <label ng-show="family.covoit  && family.covoitInfo.rider" for="seats" class="pure-number">
+                        J'ai une voiture <input id="seats" type="number" min="0" max="9" ng-model="family.covoitInfo.seats"> places.
+                        <br> 
                     </label>
-                    <br> 
                     <p class="is-center"><button type="submit" ng-click="covoiturage('family')" class="pure-button pure-button-primary">Je valide</button></p>
                 </fieldset>
             </form>
