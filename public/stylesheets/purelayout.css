@@ -99,6 +99,14 @@ a.add:hover{
     background-color:#3C546C; 
 }
 
+.warning{
+    background-color: rgba(245, 193, 180, 0.6);
+    color: black;
+    padding: 0.7em 0.9em;
+    border-radius: 0.5em;
+    font-weight: bold;
+}
+
 ul li{
     list-style-type:none; 
 }
